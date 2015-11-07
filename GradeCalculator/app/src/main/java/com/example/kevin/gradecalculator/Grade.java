@@ -13,7 +13,7 @@ public class Grade {
     //mark for the number in a percentage
     private String name;
     private String type;
-    private int mark;
+    private float mark;
     //Constructors
     public Grade(){
         name = "";
@@ -32,7 +32,7 @@ public class Grade {
     public String getType(){
         return type;
     }
-    public int getMark(){
+    public float getMark(){
         return mark;
     }
     //Setters

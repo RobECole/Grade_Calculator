@@ -12,14 +12,44 @@ import java.util.Map;
  */
 public class Course {
     //instance variables
+    //name is the name of the course
     //grades is list of grades for the course
     //categoryDistribution is the map of the category type to percentage
+    //mark is the total current mark in the course after applying distribution
+    private String name;
     private List<Grade> grades;
     private Map<String,Integer> categoryDistribution;
+    private float mark;
     //constructors
     public Course(){
-        grades = new ArrayList<>();
-        categoryDistribution = new HashMap<>();
+        this.grades = new ArrayList<>();
+        this.categoryDistribution = new HashMap<>();
+        this.name = "";
+        this.mark = 0;
+    }
+    public Course(ArrayList<Grade> grades,
+                  HashMap<String, Integer> categoryDistribution,
+                  String name,
+                  int mark){
+        this.grades = grades;
+        this.categoryDistribution = categoryDistribution;
+        this.name = name;
+        this.mark = mark;
+    }
+    public Course(
+                  String name,
+                  int mark){
+        this.grades = new ArrayList<>();
+        this.categoryDistribution = new HashMap<>();
+        this.name = name;
+        this.mark = mark;
+    }
+    public Course(
+            String name){
+        this.grades = new ArrayList<>();
+        this.categoryDistribution = new HashMap<>();
+        this.name = name;
+        this.mark = 0;
     }
     //Getters
     public List<Grade> getGrades(){
@@ -28,12 +58,24 @@ public class Course {
     public Map<String, Integer> getCategoryDistribution(){
         return categoryDistribution;
     }
+    public String getName(){
+        return name;
+    }
+    public float getMark(){
+        return mark;
+    }
     //Setters
     public void setGrades(ArrayList<Grade> grades){
         this.grades = grades;
     }
     public void setCategoryDistribution(HashMap<String, Integer> categoryDistribution){
         this.categoryDistribution = categoryDistribution;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setMark(int mark){
+        this.mark = mark;
     }
     //Adders
     public void addGrade(Grade grade){
@@ -63,4 +105,12 @@ public class Course {
         }
     }
     //Updaters
+    //TODO updateGrade
+
+    //TODO updateCategory
+
+    //TODO updateDistribution
+
+    //TODO updateMark
+
 }
