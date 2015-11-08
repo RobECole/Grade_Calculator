@@ -20,6 +20,7 @@ public class Course {
     private List<Grade> grades;
     private Map<String,Integer> categoryDistribution;
     private float mark;
+    private long id;
     //constructors
     public Course(){
         this.grades = new ArrayList<>();
@@ -38,7 +39,7 @@ public class Course {
     }
     public Course(
                   String name,
-                  int mark){
+                  float mark){
         this.grades = new ArrayList<>();
         this.categoryDistribution = new HashMap<>();
         this.name = name;
@@ -64,6 +65,9 @@ public class Course {
     public float getMark(){
         return mark;
     }
+    public long getId(){
+        return id;
+    }
     //Setters
     public void setGrades(ArrayList<Grade> grades){
         this.grades = grades;
@@ -76,6 +80,9 @@ public class Course {
     }
     public void setMark(int mark){
         this.mark = mark;
+    }
+    public void setId(long id){
+        this.id = id;
     }
     //Adders
     public void addGrade(Grade grade){

@@ -2,8 +2,10 @@ package com.example.kevin.gradecalculator;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by Kevin on 11/7/2015.
@@ -12,44 +14,42 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_FILENAME = "contacts.db";
+    public static final String DATABASE_FILENAME = "courses.db";
     public static final String TABLE_COURSES = "Courses";
     public static final String TABLE_GRADES = "Grades";
     public static final String TABLE_COURSE_DISTRIBUTION = "Course_Distribution";
 
     // create table statements
     public static final String CREATE_TABLE_COURSES = "CREATE TABLE " + TABLE_COURSES + "(" +
-            "  _id integer primary key autoincrement, " +
+            "  id integer primary key, " +
             "  courseName text not null," +
             "  courseMark real not null" +
             ")";
     public static final String CREATE_TABLE_GRADES = "CREATE TABLE " + TABLE_GRADES + "(" +
-            "  _id integer primary key autoincrement, " +
+            "  id integer primary key, " +
             "  gradeName text not null," +
             "  gradeType text not null," +
             "  gradeMark real not null," +
             "  courseID integer not null" +
             ")";
     public static final String CREATE_TABLE_COURSE_DISTRIBUTION = "CREATE TABLE " + TABLE_COURSE_DISTRIBUTION + "(" +
-            "  _id integer primary key autoincrement, " +
             "  categoryName text not null," +
             "  distribution integer not null," +
             "  courseID integer not null," +
             ")";
 
     //drop table statements
-    public static final String DROP_COURSES = "DROP TABLE " + TABLE_COURSES;
+    public static final String DROP_COURSES = "DROP TABLE IF EXISTS " + TABLE_COURSES;
 
-    public static final String DROP_GRADES = "DROP TABLE " + TABLE_GRADES;
+    public static final String DROP_GRADES = "DROP TABLE IF EXISTS " + TABLE_GRADES;
 
-    public static final String DROP_COURSE_DISTRIBUTION = "DROP TABLE " + TABLE_COURSE_DISTRIBUTION;
+    public static final String DROP_COURSE_DISTRIBUTION = "DROP TABLE IF EXISTS " + TABLE_COURSE_DISTRIBUTION;
 
     //constructor
     public DBHelper(Context context) {
         super(context, DATABASE_FILENAME, null, DATABASE_VERSION);
     }
 
-    //onCreate
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(CREATE_TABLE_COURSES);
@@ -71,53 +71,111 @@ public class DBHelper extends SQLiteOpenHelper {
         database.execSQL(CREATE_TABLE_GRADES);
         database.execSQL(CREATE_TABLE_COURSE_DISTRIBUTION);
     }
-    //TODO EVERYTHING BELOW THIS!!!
-   /* public Course createCourse(String name) {
+    //Creators
+    public Course createCourse(String name) {
         // create the object
-        Course contact = new Course(name);
+        Course course = new Course(name);
 
         // obtain a database connection
         SQLiteDatabase database = this.getWritableDatabase();
 
         // insert the data into the database
         ContentValues values = new ContentValues();
-        values.put("firstName", contact.getFirstName());
-        values.put("lastName", contact.getLastName());
-        values.put("email", contact.getEmail());
-        values.put("phone", contact.getPhone());
-        long id = database.insert(TABLE_NAME, null, values);
+        values.put("courseName", course.getName());
+        values.put("courseMark", course.getMark());
+        long id = database.insert(TABLE_COURSES, null, values);
 
         // assign the Id of the new database row as the Id of the object
-        contact.setId(id);
+       course.setId(id);
 
-        return contact;
+        return course;
     }
+    public Grade createGrade(String name, String type, float mark, long courseId) {
+        // create the object
+        Grade grade = new Grade(name, type, mark, courseId);
 
-    public Contact getContact(long id) {
-        Contact contact = null;
+        // obtain a database connection
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // insert the data into the database
+        ContentValues values = new ContentValues();
+        values.put("gradeName", grade.getName());
+        values.put("gradeType", grade.getType());
+        values.put("gradeMark", grade.getMark());
+        values.put("courseID", courseId);
+        long id = database.insert(TABLE_GRADES, null, values);
+
+        // assign the Id of the new database row as the Id of the object
+        grade.setId(id);
+
+        return grade;
+    }
+    public Course createDistrbution(String category, int distribution, String courseName) {
+        // create the object
+        Course course = getCourse(courseName);
+
+        // obtain a database connection
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // insert the data into the database
+        ContentValues values = new ContentValues();
+        values.put("categoryName", category);
+        values.put("distribution", distribution);
+        values.put("courseID", course.getId());
+        database.insert(TABLE_COURSE_DISTRIBUTION, null, values);
+
+        return course;
+    }
+    //Getters
+    public Course getCourse(String name) {
+        Course course = null;
 
         // obtain a database connection
         SQLiteDatabase database = this.getWritableDatabase();
 
         // retrieve the contact from the database
-        String[] columns = new String[] { "firstName", "lastName", "email", "phone" };
-        Cursor cursor = database.query(TABLE_NAME, columns, "_id = ?", new String[] { "" + id }, "", "", "");
+        String[] columns = new String[] { "id", "courseName", "courseMark"};
+        Cursor cursor = database.query(TABLE_COURSES, columns, "id = ?", new String[]{"" + name}, "", "", "");
         if (cursor.getCount() >= 1) {
             cursor.moveToFirst();
-            String firstName = cursor.getString(0);
-            String lastName = cursor.getString(1);
-            String email = cursor.getString(2);
-            String phone = cursor.getString(3);
-            contact = new Contact(firstName, lastName, email, phone);
-            contact.setId(id);
+            long id = Long.parseLong(cursor.getString(0));
+            String courseName = cursor.getString(1);
+            float courseMark = Float.parseFloat(cursor.getString(2));
+            course = new Course(courseName, courseMark);
+            course.setId(id);
         }
 
-        Log.i("DatabaseAccess", "getContact(" + id + "):  contact: " + contact);
+        Log.i("DatabaseAccess", "getCourse(" + name + "):  course: " + course);
 
-        return contact;
+        return course;
+    }
+    public Grade getGrade(String name) {
+        Grade grade = null;
+
+        // obtain a database connection
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // retrieve the contact from the database
+        String[] columns = new String[] { "id", "courseName", "courseMark"};
+        Cursor cursor = database.query(TABLE_GRADES, columns, "id = ?", new String[]{"" + name}, "", "", "");
+        if (cursor.getCount() >= 1) {
+            cursor.moveToFirst();
+            long id = Long.parseLong(cursor.getString(0));
+            String gradeName = cursor.getString(1);
+            String gradeType = cursor.getString(2);
+            float gradeMark = Float.parseFloat(cursor.getString(3));
+            long courseID = Long.parseLong(cursor.getString(4));
+            grade = new Grade(gradeName,gradeType, gradeMark, courseID);
+            grade.setId(id);
+        }
+
+        Log.i("DatabaseAccess", "getGrade(" + name + "):  grade: " + grade);
+
+        return grade;
     }
 
-    public ArrayList<Contact> getAllContacts() {
+    //TODO EVERYTHING BELOW THIS!!!
+    /* public ArrayList<Contact> getAllContacts() {
         ArrayList<Contact> contacts = new ArrayList<Contact>();
 
         // obtain a database connection
@@ -148,6 +206,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return contacts;
     }
+
     public boolean updateContact(Contact contact) {
         // obtain a database connection
         SQLiteDatabase database = this.getWritableDatabase();

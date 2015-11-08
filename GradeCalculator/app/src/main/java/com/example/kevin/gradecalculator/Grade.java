@@ -8,22 +8,21 @@ package com.example.kevin.gradecalculator;
  */
 public class Grade {
     //instance variables
+    //id is for database reference
     //name for the grade name
     //type for the grade type
     //mark for the number in a percentage
+    private long id;
     private String name;
     private String type;
     private float mark;
-    //Constructors
-    public Grade(){
-        name = "";
-        type = "";
-        mark = 0;
-    }
-    public Grade(String name, String type, int mark){
+    private long courseId;
+    //Constructor
+    public Grade(String name, String type, float mark, long courseId){
         this.name = name;
         this.type = type;
         this.mark = mark;
+        this.courseId = courseId;
     }
     //Getters
     public String getName(){
@@ -35,6 +34,12 @@ public class Grade {
     public float getMark(){
         return mark;
     }
+    public long getId(){
+        return id;
+    }
+    public long getCourseId(){
+        return courseId;
+    }
     //Setters
     public void setName(String name){
         this.name = name;
@@ -44,6 +49,12 @@ public class Grade {
     }
     public void setMark(int mark){
         this.mark = mark;
+    }
+    public void setId(long id){
+        this.id = id;
+    }
+    public void setCourseId(long courseId){
+        this.courseId = courseId;
     }
     //toString override
     public String toString(){
