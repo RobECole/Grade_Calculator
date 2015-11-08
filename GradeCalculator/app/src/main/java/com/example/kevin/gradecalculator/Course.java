@@ -78,7 +78,7 @@ public class Course {
     public void setName(String name){
         this.name = name;
     }
-    public void setMark(int mark){
+    public void setMark(float mark){
         this.mark = mark;
     }
     public void setId(long id){
@@ -106,18 +106,28 @@ public class Course {
     }
     public void deleteCategory(String category){
         if(this.categoryDistribution.containsKey(category)){
-            int distribution = this.categoryDistribution.get(category);
             this.categoryDistribution.remove(category);
-            addCategoryDistribution(category,distribution);
         }
     }
     //Updaters
-    //TODO updateGrade
-
-    //TODO updateCategory
-
-    //TODO updateDistribution
-
+    public void updateCategoryName(String category){
+        if(this.categoryDistribution.containsKey(category)){
+            int distribution = this.categoryDistribution.get(category);
+            this.categoryDistribution.remove(category);
+            addCategoryDistribution(category, distribution);
+        }
+    }
+    public void updateDistribution(String category, int distribution){
+        deleteCategory(category);
+        addCategoryDistribution(category, distribution);
+    }
     //TODO updateMark
+    public void updateMark(){
+        float mark = 0;
+        //match type == category name
+        //multiply totals in each category with distribution percentage
+        //add all results to a total
+        setMark(mark);
+    }
 
 }

@@ -146,7 +146,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         Log.i("DatabaseAccess", "getCourse(" + name + "):  course: " + course);
-
+        cursor.close();
         return course;
     }
     public Grade getGrade(String name) {
@@ -170,7 +170,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         Log.i("DatabaseAccess", "getGrade(" + name + "):  grade: " + grade);
-
+        cursor.close();
         return grade;
     }
 
