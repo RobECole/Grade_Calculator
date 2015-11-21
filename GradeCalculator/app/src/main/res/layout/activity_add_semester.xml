@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="35dp" />
+        android:layout_marginTop="45dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,24 +26,23 @@
         android:layout_below="@+id/yearLabel"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="35dp" />
+        android:layout_marginTop="45dp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/yearIn"
-        android:layout_alignBottom="@+id/yearLabel"
-        android:layout_toEndOf="@+id/yearLabel"
-        android:layout_marginTop="35dp"
-        android:inputType="number" />
+        android:inputType="number"
+        android:layout_alignTop="@+id/yearLabel"
+        android:layout_toRightOf="@+id/yearLabel"
+        android:layout_toEndOf="@+id/yearLabel" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/termIn"
-        android:layout_alignBottom="@+id/termLabel"
-        android:layout_toEndOf="@+id/termLabel"
-        android:layout_marginTop="35dp" />
+        android:layout_alignTop="@+id/termLabel"
+        android:layout_toEndOf="@+id/termLabel" />
 
     <Button
         android:layout_width="wrap_content"

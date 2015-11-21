@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -30,14 +32,21 @@ public class MainActivity extends AppCompatActivity {
     private String licenseUrl = "https://www.gnu.org/licenses/gpl.txt";
 
 
-    private List<Semester> semesterList = new ArrayList<>();
-
+    public List<Semester> semesterList = new ArrayList<>();
+    public ArrayAdapter<Semester> adapter;
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(this);
+        Semester s = new Semester("test",2012);
+        semesterList.add(s);
+
+        lv = (ListView)findViewById(R.id.listView);
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,semesterList);
+        lv.setAdapter(adapter);
 
     }
 
@@ -52,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
         semesterList = readFromFile();
+
     }
 
     @Override
@@ -82,10 +92,16 @@ public class MainActivity extends AppCompatActivity {
         if (responseCode == RESULT_OK) {
            if(requestCode == ADD_SEMESTER_REQUEST){
                 //TODO add semester to list
+               Semester s = new Semester(resultIntent.getStringExtra("Term"), Integer.parseInt(resultIntent.getStringExtra("Year")));
+               semesterList.add(s);
+               adapter.notifyDataSetChanged();
+
            }else if(requestCode == RMV_SEMESTER_REQUEST){
                 //TODO remove semester from list
            }
+
         }
+
     }
 
     public void addSemester(View view) {
