@@ -5,4 +5,17 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="add">Add</string>
+    <string name="rmv">Remove</string>
+    <string name="title_activity_add_semester">addSemester</string>
+    <string name="year">Year:</string>
+    <string name="term">Term:</string>
+    <string name="can">Cancel</string>
+    <string name="title_activity_remove_semester">removeSemester</string>
+    <string name="title_activity_course_view">courseView</string>
+    <string name="title_activity_add_course">addCourse</string>
+    <string name="title_activity_remove_course">removeCourse</string>
+    <string name="coursename">Course Name:</string>
+    <string name="title_activity_show_grades">showGrades</string>
+    <string name="title_activity_add_grade">addGrade</string>
 </resources>
