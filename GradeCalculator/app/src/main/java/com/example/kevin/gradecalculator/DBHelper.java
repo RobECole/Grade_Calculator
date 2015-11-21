@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by Kevin on 11/7/2015.
  * This is for storing the course information into a database to retrieve on start up and to
@@ -34,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
             ")";
     public static final String CREATE_TABLE_COURSE_DISTRIBUTION = "CREATE TABLE " + TABLE_COURSE_DISTRIBUTION + "(" +
             "  categoryName text not null," +
-            "  distribution integer not null," +
+            "  distribution real not null," +
             "  courseID integer not null," +
             ")";
 
@@ -110,9 +115,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return grade;
     }
-    public Course createDistrbution(String category, int distribution, String courseName) {
+    public Course createDistribution(String category, float distribution, int id) {
         // create the object
-        Course course = getCourse(courseName);
+        Course course = getCourseById(id);
 
         // obtain a database connection
         SQLiteDatabase database = this.getWritableDatabase();
@@ -127,7 +132,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return course;
     }
     //Getters
-    public Course getCourse(String name) {
+    //Get course by course id (id is unique)
+    public Course getCourseById(int courseId) {
         Course course = null;
 
         // obtain a database connection
@@ -135,7 +141,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // retrieve the contact from the database
         String[] columns = new String[] { "id", "courseName", "courseMark"};
-        Cursor cursor = database.query(TABLE_COURSES, columns, "id = ?", new String[]{"" + name}, "", "", "");
+        Cursor cursor = database.query(TABLE_COURSES, columns, "id = ?", new String[]{"" + courseId}, "", "", "");
         if (cursor.getCount() >= 1) {
             cursor.moveToFirst();
             long id = Long.parseLong(cursor.getString(0));
@@ -145,19 +151,20 @@ public class DBHelper extends SQLiteOpenHelper {
             course.setId(id);
         }
 
-        Log.i("DatabaseAccess", "getCourse(" + name + "):  course: " + course);
+        Log.i("DatabaseAccess", "getCourse(" + courseId + "):  course: " + course);
         cursor.close();
         return course;
     }
-    public Grade getGrade(String name) {
+    //Get grade by grade id (id is unique)
+    public Grade getGrade(int gradeId) {
         Grade grade = null;
 
         // obtain a database connection
         SQLiteDatabase database = this.getWritableDatabase();
 
         // retrieve the contact from the database
-        String[] columns = new String[] { "id", "courseName", "courseMark"};
-        Cursor cursor = database.query(TABLE_GRADES, columns, "id = ?", new String[]{"" + name}, "", "", "");
+        String[] columns = new String[] { "id", "gradeName", "gradeType", "gradeMark", "courseID"};
+        Cursor cursor = database.query(TABLE_GRADES, columns, "id = ?", new String[]{"" + gradeId}, "", "", "");
         if (cursor.getCount() >= 1) {
             cursor.moveToFirst();
             long id = Long.parseLong(cursor.getString(0));
@@ -169,82 +176,165 @@ public class DBHelper extends SQLiteOpenHelper {
             grade.setId(id);
         }
 
-        Log.i("DatabaseAccess", "getGrade(" + name + "):  grade: " + grade);
+        Log.i("DatabaseAccess", "getGrade(" + gradeId + "):  grade: " + grade);
         cursor.close();
         return grade;
     }
-
-    //TODO EVERYTHING BELOW THIS!!!
-    /* public ArrayList<Contact> getAllContacts() {
-        ArrayList<Contact> contacts = new ArrayList<Contact>();
+    //Get all grades for one course id
+    public List<Grade> getGradesByCourseId(int courseId) {
+        List<Grade> grades = new ArrayList<>();
 
         // obtain a database connection
         SQLiteDatabase database = this.getWritableDatabase();
 
         // retrieve the contact from the database
-        String[] columns = new String[] { "_id", "firstName", "lastName", "email", "phone" };
-        Cursor cursor = database.query(TABLE_NAME, columns, "", new String[]{}, "", "", "");
-        cursor.moveToFirst();
-        do {
-            // collect the contact data, and place it into a contact object
-            long id = Long.parseLong(cursor.getString(0));
-            String firstName = cursor.getString(1);
-            String lastName = cursor.getString(2);
-            String email = cursor.getString(3);
-            String phone = cursor.getString(4);
-            Contact contact = new Contact(firstName, lastName, email, phone);
-            contact.setId(id);
+        String[] columns = new String[] { "id", "gradeName", "gradeType", "gradeMark", "courseID"};
+        Cursor cursor = database.query(TABLE_GRADES, columns, "courseID = ?", new String[]{"" + courseId}, "", "", "");
+        if (cursor.getCount() >= 1) {
+            cursor.moveToFirst();
+            do {
+                // collect the contact data, and place it into a contact object
+                long id = Long.parseLong(cursor.getString(0));
+                String gradeName = cursor.getString(1);
+                String gradeType = cursor.getString(2);
+                float gradeMark = Float.parseFloat(cursor.getString(3));
+                long courseID = Long.parseLong(cursor.getString(4));
 
-            // add the current contact to the list
-            contacts.add(contact);
+                Grade grade = new Grade(gradeName,gradeType, gradeMark, courseID);
+                grade.setId(id);
+                //add distribution to map
+                grades.add(grade);
 
-            // advance to the next row in the results
-            cursor.moveToNext();
-        } while (!cursor.isAfterLast());
+                // advance to the next row in the results
+                cursor.moveToNext();
+            } while (!cursor.isAfterLast());
+        }
 
-        Log.i("DatabaseAccess", "getAllContacts():  num: " + contacts.size());
-
-        return contacts;
+        Log.i("DatabaseAccess", "getGradesByCourseId(" + courseId + ")");
+        cursor.close();
+        return grades;
     }
+    //Gets all distribution with 1 course id
+    public Map<String,Float> getDistribution(int courseId) {
 
-    public boolean updateContact(Contact contact) {
+        Map<String,Float> courseDistribution = new HashMap<>();
+
+        Course course = null;
+
         // obtain a database connection
         SQLiteDatabase database = this.getWritableDatabase();
 
-        // update the data in the database
-        ContentValues values = new ContentValues();
-        values.put("firstName", contact.getFirstName());
-        values.put("lastName", contact.getLastName());
-        values.put("email", contact.getEmail());
-        values.put("phone", contact.getPhone());
-        int numRowsAffected = database.update(TABLE_NAME, values, "_id = ?", new String[] { "" + contact.getId() });
+        // retrieve the contact from the database
+        String[] columns = new String[] { "categoryName", "distribution", "courseID"};
+        Cursor cursor = database.query(TABLE_COURSE_DISTRIBUTION, columns, "courseID = ?", new String[]{"" + courseId}, "", "", "");
+        if (cursor.getCount() >= 1) {
+            cursor.moveToFirst();
+            do {
+                // collect the contact data, and place it into a contact object
+                String category = cursor.getString(0);
+                float distribution = Float.parseFloat(cursor.getString(1));
+                //add distribution to map
+                courseDistribution.put(category, distribution);
 
-        Log.i("DatabaseAccess", "updateContact(" + contact + "):  numRowsAffected: " + numRowsAffected);
+                // advance to the next row in the results
+                cursor.moveToNext();
+            } while (!cursor.isAfterLast());
+        }
 
-        // verify that the contact was updated successfully
-        return (numRowsAffected == 1);
+        Log.i("DatabaseAccess", "getDistribution(" + courseId + "):  course: " + course);
+        cursor.close();
+        return courseDistribution;
     }
-
-    public boolean deleteContact(long id) {
+    //Deleters
+    public boolean deleteCourseById(int id) {
         // obtain a database connection
         SQLiteDatabase database = this.getWritableDatabase();
 
         // delete the contact
-        int numRowsAffected = database.delete(TABLE_NAME, "_id = ?", new String[] { "" + id });
+        int numRowsAffected = database.delete(TABLE_COURSES, "id = ?", new String[] { "" + id });
 
         Log.i("DatabaseAccess", "deleteContact(" + id + "):  numRowsAffected: " + numRowsAffected);
 
         // verify that the contact was deleted successfully
         return (numRowsAffected == 1);
     }
-
-    public void deleteAllContacts() {
+    public boolean deleteGradeById(int id) {
         // obtain a database connection
         SQLiteDatabase database = this.getWritableDatabase();
 
         // delete the contact
-        int numRowsAffected = database.delete(TABLE_NAME, "", new String[] {});
+        int numRowsAffected = database.delete(TABLE_GRADES, "id = ?", new String[] { "" + id });
+
+        Log.i("DatabaseAccess", "deleteContact(" + id + "):  numRowsAffected: " + numRowsAffected);
+
+        // verify that the contact was deleted successfully
+        return (numRowsAffected == 1);
+    }
+    public void deleteAllCourses() {
+        // obtain a database connection
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // delete the contact
+        int numRowsAffected = database.delete(TABLE_COURSES, "", new String[] {});
 
         Log.i("DatabaseAccess", "deleteAllContacts():  numRowsAffected: " + numRowsAffected);
-    }*/
+    }
+    public void deleteAllGrades() {
+        // obtain a database connection
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // delete the contact
+        int numRowsAffected = database.delete(TABLE_GRADES, "", new String[] {});
+
+        Log.i("DatabaseAccess", "deleteAllContacts():  numRowsAffected: " + numRowsAffected);
+    }
+    //Updaters
+    public boolean updateCourse(Course course) {
+        // obtain a database connection
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // update the data in the database
+        ContentValues values = new ContentValues();
+        values.put("courseName", course.getName());
+        values.put("courseMark", course.getMark());
+        int numRowsAffected = database.update(TABLE_COURSES, values, "id = ?", new String[]{"" + course.getId()});
+
+        Log.i("DatabaseAccess", "updateCourse(" + course + "):  numRowsAffected: " + numRowsAffected);
+
+        // verify that the contact was updated successfully
+        return (numRowsAffected == 1);
+    }
+    public boolean updateGrade(Grade grade) {
+        // obtain a database connection
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // update the data in the database
+        ContentValues values = new ContentValues();
+        values.put("gradeName", grade.getName());
+        values.put("gradeType", grade.getType());
+        values.put("gradeMark", grade.getMark());
+        values.put("courseID",  grade.getCourseId());
+        int numRowsAffected = database.update(TABLE_COURSES, values, "id = ?", new String[] { "" + grade.getId() });
+
+        Log.i("DatabaseAccess", "updateGrade(" + grade + "):  numRowsAffected: " + numRowsAffected);
+
+        // verify that the contact was updated successfully
+        return (numRowsAffected == 1);
+    }
+    public boolean updateDistribution(String category, float distribution, int courseID) {
+        // obtain a database connection
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // update the data in the database
+        ContentValues values = new ContentValues();
+        values.put("categoryName", category);
+        values.put("distribution", distribution);
+        values.put("courseID", courseID);
+        int numRowsAffected = database.update(TABLE_COURSE_DISTRIBUTION, values, "courseID = ? AND categoryName = ?", new String[] { "" + courseID, "" + category });
+
+        Log.i("DatabaseAccess", "updateDistribution(" + category + " : " + distribution + "):  numRowsAffected: " + numRowsAffected);
+
+        // verify that the contact was updated successfully
+        return (numRowsAffected == 1);
+    }
 }

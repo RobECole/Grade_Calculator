@@ -54,7 +54,7 @@ public class CourseAdapter extends BaseAdapter {
         lblTitle.setText(courseToDisplay.getName());
 
         TextView lblAuthor = (TextView)convertView.findViewById(R.id.lbl_CourseMark);
-        lblAuthor.setText(courseToDisplay.getMark());
+        lblAuthor.setText("" + courseToDisplay.getMark());
 
         return convertView;
     }

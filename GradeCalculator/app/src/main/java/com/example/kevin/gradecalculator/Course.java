@@ -18,7 +18,7 @@ public class Course {
     //mark is the total current mark in the course after applying distribution
     private String name;
     private List<Grade> grades;
-    private Map<String,Integer> categoryDistribution;
+    private Map<String,Float> categoryDistribution;
     private float mark;
     private long id;
     //constructors
@@ -29,7 +29,7 @@ public class Course {
         this.mark = 0;
     }
     public Course(ArrayList<Grade> grades,
-                  HashMap<String, Integer> categoryDistribution,
+                  HashMap<String, Float> categoryDistribution,
                   String name,
                   int mark){
         this.grades = grades;
@@ -56,7 +56,7 @@ public class Course {
     public List<Grade> getGrades(){
         return grades;
     }
-    public Map<String, Integer> getCategoryDistribution(){
+    public Map<String, Float> getCategoryDistribution(){
         return categoryDistribution;
     }
     public String getName(){
@@ -72,7 +72,7 @@ public class Course {
     public void setGrades(ArrayList<Grade> grades){
         this.grades = grades;
     }
-    public void setCategoryDistribution(HashMap<String, Integer> categoryDistribution){
+    public void setCategoryDistribution(HashMap<String, Float> categoryDistribution){
         this.categoryDistribution = categoryDistribution;
     }
     public void setName(String name){
@@ -88,7 +88,7 @@ public class Course {
     public void addGrade(Grade grade){
         this.grades.add(grade);
     }
-    public void addCategoryDistribution(String category, int distribution){
+    public void addCategoryDistribution(String category, float  distribution){
         this.categoryDistribution.put(category, distribution);
     }
     //Deleters
@@ -112,7 +112,7 @@ public class Course {
     //Updaters
     public void updateCategoryName(String category){
         if(this.categoryDistribution.containsKey(category)){
-            int distribution = this.categoryDistribution.get(category);
+            float distribution = this.categoryDistribution.get(category);
             this.categoryDistribution.remove(category);
             addCategoryDistribution(category, distribution);
         }

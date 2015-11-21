@@ -56,4 +56,13 @@ public class Semester {
             counter++;
         }
     }
+
+    public String toString(){
+        String semester = year + " " + term;
+        for(Course course: courses) {
+            semester = " " + course.getId();
+        }
+        semester = semester + "\n";
+        return semester;
+    }
 }
