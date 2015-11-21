@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(this);
         Semester s = new Semester("test",2012);
+        Course c = new Course("bogus");
+        s.addCourse(c);
         semesterList.add(s);
 
         lv = (ListView)findViewById(R.id.listView);
@@ -60,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        semesterList = readFromFile();
+        if(semesterList.isEmpty()){
+            semesterList = readFromFile();
+        }
 
     }
 

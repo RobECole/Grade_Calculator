@@ -20,6 +20,7 @@ public class Semester {
     public Semester(String term, int year){
         this.term = term;
         this.year = year;
+        this.courses = new ArrayList<>();
     }
     //Getters
     public String getTerm(){
