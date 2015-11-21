@@ -23,7 +23,13 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     public DBHelper dbHelper;
+    public static int  GET_LICENSE_REQUEST = 2;
+    public static int  ADD_SEMESTER_REQUEST = 23;
+    public static int  RMV_SEMESTER_REQUEST = 24;
     private String filename = "semesters.txt";
+    private String licenseUrl = "https://www.gnu.org/licenses/gpl.txt";
+
+
     private List<Semester> semesterList = new ArrayList<>();
 
 
@@ -69,14 +75,34 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int responseCode, Intent resultIntent) {
+        super.onActivityResult(requestCode, responseCode, resultIntent);
+
+        if (responseCode == RESULT_OK) {
+           if(requestCode == ADD_SEMESTER_REQUEST){
+                //TODO add semester to list
+           }else if(requestCode == RMV_SEMESTER_REQUEST){
+                //TODO remove semester from list
+           }
+        }
+    }
+
     public void addSemester(View view) {
         Intent intent = new Intent(this, addSemester.class);
-        startActivityForResult(intent, 23);
+        startActivityForResult(intent, ADD_SEMESTER_REQUEST);
     }
 
     public void rmvSemester(View view) {
         Intent intent = new Intent(this, removeSemester.class);
-        startActivityForResult(intent, 23);
+        startActivityForResult(intent, RMV_SEMESTER_REQUEST);
+    }
+
+
+    public void getLicense(View view){
+        Intent intent = new Intent(this, ShowLicenseActivity.class);
+        intent.putExtra("licenseUrl", licenseUrl);
+        startActivityForResult(intent, GET_LICENSE_REQUEST);
     }
 
 

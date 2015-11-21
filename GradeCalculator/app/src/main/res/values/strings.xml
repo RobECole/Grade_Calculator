@@ -18,4 +18,5 @@
     <string name="coursename">Course Name:</string>
     <string name="title_activity_show_grades">showGrades</string>
     <string name="title_activity_add_grade">addGrade</string>
+    <string name="title_activity_show_license">ShowLicenseActivity</string>
 </resources>
