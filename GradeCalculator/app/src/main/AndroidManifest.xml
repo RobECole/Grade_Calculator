@@ -22,8 +22,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:name=".CourseChooserActivity"
+            android:label="@string/title_activity_course_chooser" >
         </activity>
         <activity
             android:name=".addSemester"
