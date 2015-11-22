@@ -73,16 +73,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        if(semesterList.isEmpty()){
-            //try{
-               //semesterList = readFromFile();
-            //}catch (Exception e){
+        if(semesterList.isEmpty()) {
+            try {
+                semesterList = readFromFile();
+            } catch (Exception e) {
                 Intent intent = new Intent(this, addSemester.class);
                 startActivityForResult(intent, ADD_SEMESTER_REQUEST);
-           // }
-
+            }
         }
-
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,semesterList);
+        lv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -129,9 +130,11 @@ public class MainActivity extends AppCompatActivity {
                    }
                }
            }
-            adapter.notifyDataSetChanged();
-        }
 
+        }
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,semesterList);
+        lv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     public void addSemester(View view) {
@@ -200,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
                     semesters.add(semester);
                 }
             }
+            inputStream.close();
         } catch (FileNotFoundException e) {
             Log.e("login activity", "File not found: " + e.toString());
         } catch (IOException e) {
