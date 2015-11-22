@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Semester val = (Semester) parent.getSelectedItem();
+                Semester val = (Semester) semesterList.get(Integer.parseInt("" + id));
                 Intent intent = new Intent(MainActivity.this, showCourses.class);
                 intent.putExtra("semester", val);
                 startActivity(intent);

@@ -28,7 +28,6 @@ public class showCourses extends AppCompatActivity {
         setContentView(R.layout.activity_course_view);
 
         select = (Semester)getIntent().getSerializableExtra("semester");
-
         try{
             courseList = select.getCourses();
             lv = (ListView)findViewById(R.id.listView);
@@ -73,7 +72,7 @@ public class showCourses extends AppCompatActivity {
                 courseList.add(c);
                 Toast.makeText(getApplicationContext(), courseList.get(0).getName(), Toast.LENGTH_SHORT).show();
                 MainActivity.dbHelper.createCourse(resultIntent.getStringExtra("coursename"));
-
+                select.addCourse(c);
 
             }else if(requestCode == RMV_COURSE_REQUEST){
                 //TODO remove course from list

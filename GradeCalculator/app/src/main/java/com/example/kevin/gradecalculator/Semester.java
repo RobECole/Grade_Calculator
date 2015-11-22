@@ -40,8 +40,8 @@ public class Semester implements Serializable{
     public void setYear(int year){
         this.year = year;
     }
-    public void setCourses(ArrayList<Course> courses){
-        this.courses = courses;
+    public void setCourses(List<Course> courses){
+        this.courses = (ArrayList)courses;
     }
     //Adders
     public void addCourse(Course course){
