@@ -32,13 +32,13 @@ public class MainActivity extends AppCompatActivity {
     public static int  GET_LICENSE_REQUEST = 2;
     public static int  ADD_SEMESTER_REQUEST = 23;
     public static int  RMV_SEMESTER_REQUEST = 24;
+    public static int SHOW_COURSE_REQUEST = 3;
     private String filename = "semesters.txt";
     private String licenseUrl = "https://www.gnu.org/licenses/gpl.txt";
+    public static List<Semester> semesterList = new ArrayList<>();
+    public static ArrayAdapter<Semester> adapter;
+    private ListView lv;
 
-
-    public List<Semester> semesterList = new ArrayList<>();
-    public ArrayAdapter<Semester> adapter;
-    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 Semester val = (Semester) semesterList.get(Integer.parseInt("" + id));
                 Intent intent = new Intent(MainActivity.this, showCourses.class);
                 intent.putExtra("semester", val);
-                startActivity(intent);
+                startActivityForResult(intent, SHOW_COURSE_REQUEST );
 
             }
         });
@@ -129,13 +129,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (responseCode == RESULT_OK) {
            if(requestCode == ADD_SEMESTER_REQUEST){
-                //TODO add semester to list
                Semester s = new Semester(resultIntent.getStringExtra("Term"), Integer.parseInt(resultIntent.getStringExtra("Year")));
                semesterList.add(s);
 
 
            }else if(requestCode == RMV_SEMESTER_REQUEST){
-                //TODO remove semester from list
                Semester s = (Semester)resultIntent.getSerializableExtra("semester");
                for( Semester c: semesterList){
                    if (c.getTerm().equals(s.getTerm()) && c.getYear()==s.getYear()) {
@@ -144,6 +142,16 @@ public class MainActivity extends AppCompatActivity {
                        break;
                    }
                }
+           }else if(requestCode == SHOW_COURSE_REQUEST){
+               Semester s = (Semester)resultIntent.getSerializableExtra("semester");
+               for( Semester c: semesterList){
+                   if (c.getTerm().equals(s.getTerm()) && c.getYear()==s.getYear()) {
+                       semesterList.remove(c);
+                       break;
+                   }
+               }
+               semesterList.add(s);
+               adapter.notifyDataSetChanged();
            }
 
         }

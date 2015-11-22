@@ -41,8 +41,15 @@ public class addSemester extends AppCompatActivity {
     public void addDb(View view) {
         EditText year = (EditText)findViewById(R.id.yearIn);
         EditText term = (EditText)findViewById(R.id.termIn);
-
+        int yearText = Integer.parseInt(year.getText().toString());
+        String termText = term.getText().toString();
         Intent results = new Intent();
+        for(Semester c : MainActivity.semesterList){
+            if(c.getTerm().equals(termText) && c.getYear()==yearText){
+                setResult(RESULT_CANCELED, results);
+                finish();
+            }
+        }
         results.putExtra("Year", year.getText().toString());
         results.putExtra("Term", term.getText().toString());
         setResult(RESULT_OK,results);
