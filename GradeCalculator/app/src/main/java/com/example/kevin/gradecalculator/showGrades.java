@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class showGrades extends AppCompatActivity {
+public class ShowGrades extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +37,11 @@ public class showGrades extends AppCompatActivity {
     }
 
     public void addGrade(View view) {
-        //TODO: go to addGrade
+        //TODO: go to AddGrade
     }
 
 
     public void rmvGrade(View view) {
-        //TODO: go to removeGrade
+        //TODO: go to RemoveGrade
     }
 }

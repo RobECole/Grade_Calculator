@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class removeSemester extends AppCompatActivity {
+public class RemoveSemester extends AppCompatActivity {
 
     public ArrayAdapter<Semester> adapter;
     Spinner sp;

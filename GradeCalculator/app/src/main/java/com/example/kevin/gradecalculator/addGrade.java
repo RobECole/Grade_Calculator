@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class addGrade extends AppCompatActivity {
+public class AddGrade extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

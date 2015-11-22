@@ -22,35 +22,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CourseChooserActivity"
-            android:label="@string/title_activity_course_chooser" >
-        </activity>
-        <activity
-            android:name=".addSemester"
+            android:name=".AddSemester"
             android:label="@string/title_activity_add_semester" >
         </activity>
         <activity
-            android:name=".removeSemester"
+            android:name=".RemoveSemester"
             android:label="@string/title_activity_remove_semester" >
         </activity>
         <activity
-            android:name=".showCourses"
+            android:name=".ShowCourses"
             android:label="@string/title_activity_course_view" >
         </activity>
         <activity
-            android:name=".addCourse"
+            android:name=".AddCourse"
             android:label="@string/title_activity_add_course" >
         </activity>
         <activity
-            android:name=".removeCourse"
+            android:name=".RemoveCourse"
             android:label="@string/title_activity_remove_course" >
         </activity>
         <activity
-            android:name=".showGrades"
+            android:name=".ShowGrades"
             android:label="@string/title_activity_show_grades" >
         </activity>
         <activity
-            android:name=".addGrade"
+            android:name=".AddGrade"
             android:label="@string/title_activity_add_grade" >
         </activity>
         <activity

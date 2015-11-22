@@ -63,7 +63,7 @@ public class Semester implements Serializable{
     public String toString(){
         String semester = year + " " + term;
         for(Course course: courses) {
-            semester = " " + course.getId();
+            semester = semester + " " + course.getId();
         }
         semester = semester + "\n";
         return semester;

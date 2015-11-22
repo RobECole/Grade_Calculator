@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-public class addCourse extends AppCompatActivity {
+public class AddCourse extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

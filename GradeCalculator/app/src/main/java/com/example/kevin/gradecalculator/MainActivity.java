@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Semester val = (Semester) semesterList.get(Integer.parseInt("" + id));
-                Intent intent = new Intent(MainActivity.this, showCourses.class);
+                Intent intent = new Intent(MainActivity.this, ShowCourses.class);
                 intent.putExtra("semester", val);
                 startActivityForResult(intent, SHOW_COURSE_REQUEST );
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 semesterList = readFromFile();
             } catch (Exception e) {
-                Intent intent = new Intent(this, addSemester.class);
+                Intent intent = new Intent(this, AddSemester.class);
                 startActivityForResult(intent, ADD_SEMESTER_REQUEST);
             }
         }
@@ -171,12 +171,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addSemester(View view) {
-        Intent intent = new Intent(this, addSemester.class);
+        Intent intent = new Intent(this, AddSemester.class);
         startActivityForResult(intent, ADD_SEMESTER_REQUEST);
     }
 
     public void rmvSemester(View view) {
-        Intent intent = new Intent(this, removeSemester.class);
+        Intent intent = new Intent(this, RemoveSemester.class);
         intent.putExtra("list", (Serializable) semesterList);
         startActivityForResult(intent, RMV_SEMESTER_REQUEST);
     }

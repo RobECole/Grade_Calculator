@@ -6,16 +6,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-public class showCourses extends AppCompatActivity {
+public class ShowCourses extends AppCompatActivity {
     public static int  ADD_COURSE_REQUEST = 33;
     public static int  RMV_COURSE_REQUEST = 34;
     public CourseAdapter adapter;
@@ -93,13 +88,13 @@ public class showCourses extends AppCompatActivity {
     }
 
     public void rmvCourse(View view) {
-        Intent intent = new Intent(this, removeCourse.class);
+        Intent intent = new Intent(this, RemoveCourse.class);
         intent.putExtra("list", (Serializable) select.getCourses());
         startActivityForResult(intent, RMV_COURSE_REQUEST);
     }
 
     public void addCourse(View view) {
-        Intent intent = new Intent(this, addCourse.class);
+        Intent intent = new Intent(this, AddCourse.class);
         startActivityForResult(intent, ADD_COURSE_REQUEST);
     }
 
