@@ -154,6 +154,16 @@ public class MainActivity extends AppCompatActivity {
                adapter.notifyDataSetChanged();
            }
 
+        }else if(responseCode == RESULT_CANCELED){
+            String error = "Do Things";
+            if(requestCode == ADD_SEMESTER_REQUEST){
+                error = "Add Semester";
+            }else if(requestCode == RMV_SEMESTER_REQUEST){
+                error = "Remove Semester";
+            }else if(requestCode == SHOW_COURSE_REQUEST){
+                error = "Show Courses";
+            }
+            Toast.makeText(getApplicationContext(),"Failed To: " + error, Toast.LENGTH_SHORT).show();
         }
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,semesterList);
         lv.setAdapter(adapter);
