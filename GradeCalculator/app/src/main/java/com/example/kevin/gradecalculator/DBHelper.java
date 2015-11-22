@@ -40,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CREATE_TABLE_COURSE_DISTRIBUTION = "CREATE TABLE " + TABLE_COURSE_DISTRIBUTION + "(" +
             "  categoryName text not null," +
             "  distribution real not null," +
-            "  courseID integer not null," +
+            "  courseID integer not null" +
             ")";
 
     //drop table statements

@@ -28,7 +28,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="text"
         android:id="@+id/courseName"
         android:layout_alignBottom="@+id/textView"
         android:layout_toEndOf="@+id/textView" />

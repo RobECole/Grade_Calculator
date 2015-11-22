@@ -1,10 +1,12 @@
 package com.example.kevin.gradecalculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 
 public class addCourse extends AppCompatActivity {
 
@@ -38,5 +40,11 @@ public class addCourse extends AppCompatActivity {
 
     public void addDb(View view) {
         //TODO: add course name into db, return course view
+        EditText name = (EditText)findViewById(R.id.courseName);
+
+        Intent results = new Intent();
+        results.putExtra("coursename", name.getText().toString());
+        setResult(RESULT_OK,results);
+        finish();
     }
 }

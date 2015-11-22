@@ -15,22 +15,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class showCourses extends AppCompatActivity {
-
+    public static int  ADD_COURSE_REQUEST = 33;
+    public static int  RMV_COURSE_REQUEST = 34;
     public static List<Course> courseList = new ArrayList<>();
-    public ArrayAdapter<Course> adapter;
+    public CourseAdapter adapter;
     ListView lv;
+    Semester select;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_view);
 
-        Semester test = (Semester)getIntent().getSerializableExtra("semester");
-        test.getCourses();
+        select = (Semester)getIntent().getSerializableExtra("semester");
 
-        lv = (ListView)findViewById(R.id.listView);
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,courseList);
-        lv.setAdapter(adapter);
+        try{
+            courseList = select.getCourses();
+            lv = (ListView)findViewById(R.id.listView);
+            adapter = new CourseAdapter(this,courseList);
+            lv.setAdapter(adapter);
+           // StoryAdapter arrayAdapter = new StoryAdapter(this, data );
+        }catch (NullPointerException ignored){
+        }
 
     }
 
@@ -56,11 +62,37 @@ public class showCourses extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int responseCode, Intent resultIntent) {
+        super.onActivityResult(requestCode, responseCode, resultIntent);
+
+        if (responseCode == RESULT_OK) {
+            if(requestCode == ADD_COURSE_REQUEST){
+                //TODO add course to list
+                Course c = new Course(resultIntent.getStringExtra("coursename"));
+                courseList.add(c);
+                Toast.makeText(getApplicationContext(), courseList.get(0).getName(), Toast.LENGTH_SHORT).show();
+                MainActivity.dbHelper.createCourse(resultIntent.getStringExtra("coursename"));
+
+
+            }else if(requestCode == RMV_COURSE_REQUEST){
+                //TODO remove course from list
+
+            }
+            lv = (ListView)findViewById(R.id.listView);
+            adapter = new CourseAdapter(this,courseList);
+            lv.setAdapter(adapter);
+        }
+
+    }
+
     public void rmvCourse(View view) {
-        //TODO: redirect to removecourse
+        Intent intent = new Intent(this, removeCourse.class);
+        startActivityForResult(intent, RMV_COURSE_REQUEST);
     }
 
     public void addCourse(View view) {
-        //TODO; redirect to addcourse
+        Intent intent = new Intent(this, addCourse.class);
+        startActivityForResult(intent, ADD_COURSE_REQUEST);
     }
 }

@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kevin on 11/7/2015.
@@ -16,9 +17,9 @@ import java.util.ArrayList;
  */
 public class CourseAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<Course> data;
+    private List<Course> data;
 
-    public CourseAdapter(Context context, ArrayList<Course> data) {
+    public CourseAdapter(Context context, List<Course> data) {
         this.data = data;
         this.context = context;
     }

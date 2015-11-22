@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
-    public DBHelper dbHelper;
+    public static DBHelper dbHelper;
     public static int  GET_LICENSE_REQUEST = 2;
     public static int  ADD_SEMESTER_REQUEST = 23;
     public static int  RMV_SEMESTER_REQUEST = 24;
@@ -140,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
                for( Semester c: semesterList){
                    if (c.getTerm().equals(s.getTerm()) && c.getYear()==s.getYear()) {
                        semesterList.remove(c);
-                       Toast.makeText(getApplicationContext(), "HERE!!!", Toast.LENGTH_SHORT).show();
                        adapter.notifyDataSetChanged();
                        break;
                    }
