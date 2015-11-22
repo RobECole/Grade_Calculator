@@ -18,29 +18,42 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add"
+        android:text="@string/course"
+        android:drawableLeft="@drawable/plus"
         android:id="@+id/button"
         android:onClick="addCourse"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/button4"
         android:layout_alignRight="@+id/listView"
         android:layout_alignEnd="@+id/listView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/rmv"
+        android:text="@string/course"
+        android:drawableLeft="@drawable/cancel"
         android:id="@+id/button2"
         android:onClick="rmvCourse"
-        android:layout_alignTop="@+id/button3"
-        android:layout_toLeftOf="@+id/button"
-        android:layout_toStartOf="@+id/button" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/button"
+        android:layout_alignStart="@+id/button" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ret"
-        android:onClick="ret"
+        android:text="@string/distribution"
+        android:drawableLeft="@drawable/plus"
+        android:onClick="addDistribution"
         android:id="@+id/button3"
+        android:layout_below="@+id/listView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/distribution"
+        android:drawableLeft="@drawable/cancel"
+        android:onClick="rmvDistribution"
+        android:id="@+id/button4"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />

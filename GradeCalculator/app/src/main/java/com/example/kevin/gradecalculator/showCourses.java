@@ -49,7 +49,11 @@ public class ShowCourses extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_return) {
+            Intent results = new Intent();
+            results.putExtra("semester", select);
+            setResult(RESULT_OK,results);
+            finish();
             return true;
         }
 
@@ -98,11 +102,12 @@ public class ShowCourses extends AppCompatActivity {
         startActivityForResult(intent, ADD_COURSE_REQUEST);
     }
 
-    public void ret(View view) {
-        Intent results = new Intent();
-        results.putExtra("semester", select);
-        setResult(RESULT_OK,results);
-        finish();
-
+    public void addDistribution(View view) {
+        //TODO Add Distribution
     }
+
+    public void rmvDistribution(View view) {
+        //TODO Remove Distribution
+    }
+
 }

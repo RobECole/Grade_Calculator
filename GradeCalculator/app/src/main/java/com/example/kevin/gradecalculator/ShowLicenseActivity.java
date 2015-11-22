@@ -23,7 +23,7 @@ public class ShowLicenseActivity extends AppCompatActivity implements LicenseLis
         licenseText.setText("Loading");
         GetLicenseAsync getLicenseAsync = new GetLicenseAsync(this);
         getLicenseAsync.execute(getIntent().getStringExtra("licenseUrl"));
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.close);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,12 +52,6 @@ public class ShowLicenseActivity extends AppCompatActivity implements LicenseLis
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

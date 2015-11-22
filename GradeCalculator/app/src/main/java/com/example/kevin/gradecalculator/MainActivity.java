@@ -116,8 +116,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_license) {
+            Intent intent = new Intent(this, ShowLicenseActivity.class);
+            intent.putExtra("licenseUrl", licenseUrl);
+            startActivityForResult(intent, GET_LICENSE_REQUEST);
         }
 
         return super.onOptionsItemSelected(item);
@@ -180,13 +182,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("list", (Serializable) semesterList);
         startActivityForResult(intent, RMV_SEMESTER_REQUEST);
     }
-
-    public void getLicense(View view){
-        Intent intent = new Intent(this, ShowLicenseActivity.class);
-        intent.putExtra("licenseUrl", licenseUrl);
-        startActivityForResult(intent, GET_LICENSE_REQUEST);
-    }
-
 
     //write semesters to text file
     public void writeToFile(List<Semester> semesters){
