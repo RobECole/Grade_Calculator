@@ -1,5 +1,6 @@
 package com.example.kevin.gradecalculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class removeSemester extends AppCompatActivity {
 
@@ -17,6 +21,11 @@ public class removeSemester extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_semester);
+
+        sp = (Spinner)findViewById(R.id.spinner);
+        adapter = new ArrayAdapter<Semester>(this,android.R.layout.simple_spinner_item,MainActivity.semesterList);
+        sp.setAdapter(adapter);
+
 
     }
 
@@ -43,6 +52,15 @@ public class removeSemester extends AppCompatActivity {
     }
 
     public void deleteSemester(View view) {
-        //TODO: Remove selected semester from spinner from the database, return to main
+        String line = sp.getSelectedItem().toString();
+        Scanner scanner = new Scanner(line);
+        String id = scanner.next();
+
+        Intent results = new Intent();
+        results.putExtra("term", id);
+
+        setResult(RESULT_OK,results);
+        finish();
+
     }
 }

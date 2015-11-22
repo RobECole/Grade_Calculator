@@ -58,8 +58,9 @@ public class Semester {
         }
     }
 
+    @Override
     public String toString(){
-        String semester = year + " " + term;
+        String semester = term + " " + year;
         for(Course course: courses) {
             semester = " " + course.getId();
         }

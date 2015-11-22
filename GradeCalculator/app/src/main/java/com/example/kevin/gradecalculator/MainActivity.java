@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private String licenseUrl = "https://www.gnu.org/licenses/gpl.txt";
 
 
-    public List<Semester> semesterList = new ArrayList<>();
+    public static List<Semester> semesterList = new ArrayList<>();
     public ArrayAdapter<Semester> adapter;
     ListView lv;
 
@@ -41,10 +41,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         dbHelper = new DBHelper(this);
-        Semester s = new Semester("test",2012);
-        Course c = new Course("bogus");
-        s.addCourse(c);
-        semesterList.add(s);
 
         lv = (ListView)findViewById(R.id.listView);
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,semesterList);
@@ -63,7 +59,13 @@ public class MainActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
         if(semesterList.isEmpty()){
-            semesterList = readFromFile();
+            try{
+                semesterList = readFromFile();
+            }catch (Exception e){
+                Semester s = new Semester("Fall",2012);
+                semesterList.add(s);
+            }
+
         }
 
     }
@@ -98,12 +100,21 @@ public class MainActivity extends AppCompatActivity {
                 //TODO add semester to list
                Semester s = new Semester(resultIntent.getStringExtra("Term"), Integer.parseInt(resultIntent.getStringExtra("Year")));
                semesterList.add(s);
-               adapter.notifyDataSetChanged();
+
 
            }else if(requestCode == RMV_SEMESTER_REQUEST){
                 //TODO remove semester from list
+               String id = resultIntent.getStringExtra("term");
+               int i = 0;
+               for( Semester c: semesterList){
+                   if (c.getTerm().equals(id)){
+                       semesterList.remove(i);
+                       break;
+                   }
+                   i++;
+               }
            }
-
+            adapter.notifyDataSetChanged();
         }
 
     }
