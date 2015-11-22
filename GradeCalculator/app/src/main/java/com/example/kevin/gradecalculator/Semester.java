@@ -1,5 +1,6 @@
 package com.example.kevin.gradecalculator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * Data for semester will be stored in text files for each semester using their term and year as
  * the unique file name
  */
-public class Semester {
+public class Semester implements Serializable{
     //instance variables
     //year stores the year of that semester
     //term stores the term (Fall/Winter/Summer)
@@ -60,7 +61,7 @@ public class Semester {
 
     @Override
     public String toString(){
-        String semester = term + " " + year;
+        String semester = year + " " + term;
         for(Course course: courses) {
             semester = " " + course.getId();
         }

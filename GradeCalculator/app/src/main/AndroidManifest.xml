@@ -34,7 +34,7 @@
             android:label="@string/title_activity_remove_semester" >
         </activity>
         <activity
-            android:name=".courseView"
+            android:name=".showCourses"
             android:label="@string/title_activity_course_view" >
         </activity>
         <activity

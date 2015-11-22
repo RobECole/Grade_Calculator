@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private String licenseUrl = "https://www.gnu.org/licenses/gpl.txt";
 
 
-    public static List<Semester> semesterList = new ArrayList<>();
+    public List<Semester> semesterList = new ArrayList<>();
     public ArrayAdapter<Semester> adapter;
     ListView lv;
 
@@ -45,6 +48,18 @@ public class MainActivity extends AppCompatActivity {
         lv = (ListView)findViewById(R.id.listView);
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,semesterList);
         lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Semester val = (Semester) parent.getSelectedItem();
+                Intent intent = new Intent(MainActivity.this, showCourses.class);
+                intent.putExtra("semester", val);
+                startActivity(intent);
+
+            }
+        });
+
 
     }
 
@@ -59,12 +74,12 @@ public class MainActivity extends AppCompatActivity {
     public void onStart(){
         super.onStart();
         if(semesterList.isEmpty()){
-            try{
-                semesterList = readFromFile();
-            }catch (Exception e){
-                Semester s = new Semester("Fall",2012);
-                semesterList.add(s);
-            }
+            //try{
+               //semesterList = readFromFile();
+            //}catch (Exception e){
+                Intent intent = new Intent(this, addSemester.class);
+                startActivityForResult(intent, ADD_SEMESTER_REQUEST);
+           // }
 
         }
 
@@ -104,14 +119,14 @@ public class MainActivity extends AppCompatActivity {
 
            }else if(requestCode == RMV_SEMESTER_REQUEST){
                 //TODO remove semester from list
-               String id = resultIntent.getStringExtra("term");
-               int i = 0;
+               Semester s = (Semester)resultIntent.getSerializableExtra("semester");
                for( Semester c: semesterList){
-                   if (c.getTerm().equals(id)){
-                       semesterList.remove(i);
+                   if (c.getTerm().equals(s.getTerm()) && c.getYear()==s.getYear()) {
+                       semesterList.remove(c);
+                       Toast.makeText(getApplicationContext(), "HERE!!!", Toast.LENGTH_SHORT).show();
+                       adapter.notifyDataSetChanged();
                        break;
                    }
-                   i++;
                }
            }
             adapter.notifyDataSetChanged();
@@ -126,9 +141,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void rmvSemester(View view) {
         Intent intent = new Intent(this, removeSemester.class);
+        intent.putExtra("list", (Serializable) semesterList);
         startActivityForResult(intent, RMV_SEMESTER_REQUEST);
     }
-
 
     public void getLicense(View view){
         Intent intent = new Intent(this, ShowLicenseActivity.class);
@@ -143,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         Collections.sort(semesters, new Comparator<Semester>() {
             public int compare(Semester s1, Semester s2) {
                 int c;
-                c = Integer.valueOf(s1.getYear()).compareTo(Integer.valueOf(s2.getYear()));
+                c = Integer.valueOf(s1.getYear()).compareTo(s2.getYear());
                 if (c == 0)
                     c = s1.getTerm().compareTo(s2.getTerm());
                 return c;
@@ -192,4 +207,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return semesters;
     }
+
 }

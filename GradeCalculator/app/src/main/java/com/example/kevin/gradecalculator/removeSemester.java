@@ -23,7 +23,7 @@ public class removeSemester extends AppCompatActivity {
         setContentView(R.layout.activity_remove_semester);
 
         sp = (Spinner)findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<Semester>(this,android.R.layout.simple_spinner_item,MainActivity.semesterList);
+        adapter = new ArrayAdapter<Semester>(this,android.R.layout.simple_spinner_item, (ArrayList<Semester>)getIntent().getSerializableExtra("list"));
         sp.setAdapter(adapter);
 
 
@@ -52,12 +52,9 @@ public class removeSemester extends AppCompatActivity {
     }
 
     public void deleteSemester(View view) {
-        String line = sp.getSelectedItem().toString();
-        Scanner scanner = new Scanner(line);
-        String id = scanner.next();
-
+        Semester line = (Semester)sp.getSelectedItem();
         Intent results = new Intent();
-        results.putExtra("term", id);
+        results.putExtra("semester", line);
 
         setResult(RESULT_OK,results);
         finish();

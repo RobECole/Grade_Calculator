@@ -41,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/termIn"
+        android:inputType="text"
         android:layout_alignTop="@+id/termLabel"
         android:layout_toEndOf="@+id/termLabel" />
 

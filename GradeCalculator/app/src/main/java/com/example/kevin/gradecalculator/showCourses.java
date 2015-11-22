@@ -1,17 +1,37 @@
 package com.example.kevin.gradecalculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
-public class courseView extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class showCourses extends AppCompatActivity {
+
+    public static List<Course> courseList = new ArrayList<>();
+    public ArrayAdapter<Course> adapter;
+    ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_view);
+
+        Semester test = (Semester)getIntent().getSerializableExtra("semester");
+        test.getCourses();
+
+        lv = (ListView)findViewById(R.id.listView);
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,courseList);
+        lv.setAdapter(adapter);
+
     }
 
     @Override
