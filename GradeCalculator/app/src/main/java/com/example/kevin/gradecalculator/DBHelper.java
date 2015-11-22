@@ -246,7 +246,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return courseDistribution;
     }
     //Deleters
-    public boolean deleteCourseById(int id) {
+    public boolean deleteCourseById(long id) {
         // obtain a database connection
         SQLiteDatabase database = this.getWritableDatabase();
 

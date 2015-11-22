@@ -1,17 +1,30 @@
 package com.example.kevin.gradecalculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
 
 public class removeCourse extends AppCompatActivity {
+
+    public ArrayAdapter<Course> adapter;
+    Spinner sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_course);
+
+        sp = (Spinner)findViewById(R.id.spinner);
+        adapter = new ArrayAdapter<Course>(this,android.R.layout.simple_spinner_item, (ArrayList<Course>)getIntent().getSerializableExtra("list"));
+        sp.setAdapter(adapter);
     }
 
     @Override
@@ -38,5 +51,12 @@ public class removeCourse extends AppCompatActivity {
 
     public void deleteCourse(View view) {
         //TODO: Remove course in spinner from db
+        Course line = (Course)sp.getSelectedItem();
+        Intent results = new Intent();
+        results.putExtra("course", line);
+
+        setResult(RESULT_OK,results);
+        finish();
+
     }
 }

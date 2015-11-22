@@ -1,5 +1,6 @@
 package com.example.kevin.gradecalculator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Map;
  * Course keeps track of the courses for the user. Each semester will have a list of courses.
  * Courses will store the list of grades and a map of category type to percentage
  */
-public class Course {
+public class Course implements Serializable{
     //instance variables
     //name is the name of the course
     //grades is list of grades for the course
@@ -22,7 +23,7 @@ public class Course {
     private float mark;
     private long id;
     //constructors
-    public Course(){
+    public Course() {
         this.grades = new ArrayList<>();
         this.categoryDistribution = new HashMap<>();
         this.name = "";
@@ -128,6 +129,12 @@ public class Course {
         //multiply totals in each category with distribution percentage
         //add all results to a total
         setMark(mark);
+    }
+
+    @Override
+    public String toString(){
+        String Course = name;
+        return Course;
     }
 
 }

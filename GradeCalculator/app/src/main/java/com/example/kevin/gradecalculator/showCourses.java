@@ -11,13 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class showCourses extends AppCompatActivity {
     public static int  ADD_COURSE_REQUEST = 33;
     public static int  RMV_COURSE_REQUEST = 34;
-    public static List<Course> courseList = new ArrayList<>();
     public CourseAdapter adapter;
     ListView lv;
     Semester select;
@@ -29,9 +29,9 @@ public class showCourses extends AppCompatActivity {
 
         select = (Semester)getIntent().getSerializableExtra("semester");
         try{
-            courseList = select.getCourses();
+
             lv = (ListView)findViewById(R.id.listView);
-            adapter = new CourseAdapter(this,courseList);
+            adapter = new CourseAdapter(this,select.getCourses());
             lv.setAdapter(adapter);
            // StoryAdapter arrayAdapter = new StoryAdapter(this, data );
         }catch (NullPointerException ignored){
@@ -68,18 +68,25 @@ public class showCourses extends AppCompatActivity {
         if (responseCode == RESULT_OK) {
             if(requestCode == ADD_COURSE_REQUEST){
                 //TODO add course to list
-                Course c = new Course(resultIntent.getStringExtra("coursename"));
-                courseList.add(c);
-                Toast.makeText(getApplicationContext(), courseList.get(0).getName(), Toast.LENGTH_SHORT).show();
-                MainActivity.dbHelper.createCourse(resultIntent.getStringExtra("coursename"));
+                Course c = MainActivity.dbHelper.createCourse(resultIntent.getStringExtra("coursename"));
                 select.addCourse(c);
+                //Toast.makeText(getApplicationContext(), courseList.get(0).getName(), Toast.LENGTH_SHORT).show();
+
 
             }else if(requestCode == RMV_COURSE_REQUEST){
                 //TODO remove course from list
-
+                Course s = (Course)resultIntent.getSerializableExtra("course");
+                for( Course c: select.getCourses()){
+                    if (c.getName().equals(s.getName())) {
+                        select.removeCourse(c);
+                        MainActivity.dbHelper.deleteCourseById(c.getId());
+                        adapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
             }
             lv = (ListView)findViewById(R.id.listView);
-            adapter = new CourseAdapter(this,courseList);
+            adapter = new CourseAdapter(this,select.getCourses());
             lv.setAdapter(adapter);
         }
 
@@ -87,11 +94,20 @@ public class showCourses extends AppCompatActivity {
 
     public void rmvCourse(View view) {
         Intent intent = new Intent(this, removeCourse.class);
+        intent.putExtra("list", (Serializable) select.getCourses());
         startActivityForResult(intent, RMV_COURSE_REQUEST);
     }
 
     public void addCourse(View view) {
         Intent intent = new Intent(this, addCourse.class);
         startActivityForResult(intent, ADD_COURSE_REQUEST);
+    }
+
+    public void ret(View view) {
+        Intent results = new Intent();
+        results.putExtra("semester", select);
+        setResult(RESULT_OK,results);
+        finish();
+
     }
 }
