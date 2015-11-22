@@ -2,6 +2,7 @@ package com.example.kevin.gradecalculator;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,6 +61,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.add);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addSemester(view);
+            }
+        });
+
+        FloatingActionButton fabRmv = (FloatingActionButton) findViewById(R.id.rmv);
+        fabRmv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rmvSemester(view);
+            }
+        });
 
     }
 
