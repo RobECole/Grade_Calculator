@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 
@@ -79,8 +80,9 @@ public class ShowCourses extends AppCompatActivity {
         if (responseCode == RESULT_OK) {
             if(requestCode == ADD_COURSE_REQUEST){
                 Course c = MainActivity.dbHelper.createCourse(resultIntent.getStringExtra("coursename"));
+                //Toast.makeText(getApplicationContext(), c.getName(), Toast.LENGTH_SHORT).show();
                 select.addCourse(c);
-                //Toast.makeText(getApplicationContext(), courseList.get(0).getName(), Toast.LENGTH_SHORT).show();
+
 
 
             }else if(requestCode == RMV_COURSE_REQUEST){
