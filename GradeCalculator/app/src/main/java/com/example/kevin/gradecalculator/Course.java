@@ -60,6 +60,11 @@ public class Course implements Serializable{
     public Map<String, Float> getCategoryDistribution(){
         return categoryDistribution;
     }
+    public List<String> getDistributionNames(){
+        List<String> s = new ArrayList<>();
+        s.addAll(this.categoryDistribution.keySet());
+        return s;
+    }
     public String getName(){
         return name;
     }
@@ -73,7 +78,7 @@ public class Course implements Serializable{
     public void setGrades(ArrayList<Grade> grades){
         this.grades = grades;
     }
-    public void setCategoryDistribution(HashMap<String, Float> categoryDistribution){
+    public void setCategoryDistribution(Map<String, Float> categoryDistribution){
         this.categoryDistribution = categoryDistribution;
     }
     public void setName(String name){
@@ -118,7 +123,7 @@ public class Course implements Serializable{
             addCategoryDistribution(category, distribution);
         }
     }
-    public void updateDistribution(String category, int distribution){
+    public void updateDistribution(String category, long distribution){
         deleteCategory(category);
         addCategoryDistribution(category, distribution);
     }

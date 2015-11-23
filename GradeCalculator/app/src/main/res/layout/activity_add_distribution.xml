@@ -22,10 +22,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/weight"
         android:id="@+id/textView3"
-        android:layout_marginTop="47dp"
-        android:layout_below="@+id/spinner3"
+        android:layout_below="@+id/distributionType"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp" />
 
     <Button
         android:layout_width="wrap_content"

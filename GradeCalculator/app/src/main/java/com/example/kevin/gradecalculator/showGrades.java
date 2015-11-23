@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.io.Serializable;
+import java.util.Map;
+
 public class ShowGrades extends AppCompatActivity {
     public static int  ADD_GRADE_REQUEST = 43;
     public static int  RMV_GRADE_REQUEST = 44;
@@ -79,9 +82,14 @@ public class ShowGrades extends AppCompatActivity {
 
             }else if(requestCode == ADD_DISTRIBUTION_REQUEST){
                 //TODO manage creation of distribution type
+                String type = resultIntent.getStringExtra("type");
+                Float dist = Float.parseFloat(resultIntent.getStringExtra("weight"));
+                Map<String,Float> categoryDistribution = MainActivity.dbHelper.createDistribution(type, dist, (int) select.getId());
+                select.setCategoryDistribution(categoryDistribution);
 
             }else if(requestCode == RMV_DISTRIBUTION_REQUEST){
                 //TODO manage deletion of distribution type
+
 
             }
             lv = (ListView)findViewById(R.id.listView);
@@ -111,11 +119,13 @@ public class ShowGrades extends AppCompatActivity {
 
     public void addDistribution(View view) {
         Intent intent = new Intent(this, AddDistribution.class);
+        intent.putExtra("list", (Serializable)select.getDistributionNames());
         startActivityForResult(intent, ADD_DISTRIBUTION_REQUEST);
     }
 
     public void rmvDistribution(View view) {
         Intent intent = new Intent(this, RemoveDistribution.class);
+        intent.putExtra("list", (Serializable)select.getDistributionNames());
         startActivityForResult(intent, RMV_DISTRIBUTION_REQUEST);
     }
 }

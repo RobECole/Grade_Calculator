@@ -23,7 +23,7 @@ public class RemoveDistribution extends AppCompatActivity {
 
         //TODO change the array list
         sp = (Spinner)findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, (ArrayList<String>)getIntent().getSerializableExtra("list"));
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, (ArrayList<String>)getIntent().getSerializableExtra("list"));
         sp.setAdapter(adapter);
     }
 
