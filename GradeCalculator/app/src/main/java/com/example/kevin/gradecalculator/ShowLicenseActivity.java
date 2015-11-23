@@ -17,8 +17,6 @@ public class ShowLicenseActivity extends AppCompatActivity implements LicenseLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_license);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         TextView licenseText = (TextView) findViewById(R.id.licenseText);
         licenseText.setText("Loading");
         GetLicenseAsync getLicenseAsync = new GetLicenseAsync(this);

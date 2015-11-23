@@ -52,7 +52,7 @@
         <activity
             android:name=".ShowLicenseActivity"
             android:label="@string/title_activity_show_license"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name=".AddDistribution"
