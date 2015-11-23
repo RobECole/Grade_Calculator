@@ -28,4 +28,7 @@
     <string name="title_activity_add_distribution">AddDistribution</string>
     <string name="title_activity_remove_distribution">RemoveDistribution</string>
     <string name="title_activity_remove_grade">RemoveGrade</string>
+    <string name="name">Name:</string>
+    <string name="type">Distribution Type</string>
+    <string name="mark">Grade Received:</string>
 </resources>
