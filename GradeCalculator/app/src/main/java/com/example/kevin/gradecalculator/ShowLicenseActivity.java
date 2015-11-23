@@ -57,7 +57,7 @@ public class ShowLicenseActivity extends AppCompatActivity implements LicenseLis
     @Override
     public void showLicense(String license){
         TextView licenseText = (TextView) findViewById(R.id.licenseText);
-        licenseText.setText(license);
+        licenseText.setText(license + "\n\n");
         licenseText.setMovementMethod(new ScrollingMovementMethod());
     }
 
