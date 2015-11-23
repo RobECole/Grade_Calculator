@@ -42,6 +42,13 @@ public class RemoveDistribution extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent results = new Intent();
+        setResult(RESULT_CANCELED,results);
+        finish();
+    }
+
     public void deleteDistribution(View view) {
         String line = (String)sp.getSelectedItem();
         Intent results = new Intent();

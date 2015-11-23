@@ -33,6 +33,13 @@ public class AddCourse extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent results = new Intent();
+        setResult(RESULT_CANCELED,results);
+        finish();
+    }
+
     public void addDb(View view) {
         //TODO: add course name into db, return course view
         EditText name = (EditText)findViewById(R.id.courseName);

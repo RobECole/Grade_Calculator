@@ -47,11 +47,17 @@ public class RemoveGrade extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void deleteGrade(View view) {
-        Semester line = (Semester)sp.getSelectedItem();
+    @Override
+    public void onBackPressed() {
         Intent results = new Intent();
-        results.putExtra("semester", line);
+        setResult(RESULT_CANCELED,results);
+        finish();
+    }
 
+    public void deleteGrade(View view) {
+        Grade line = (Grade)sp.getSelectedItem();
+        Intent results = new Intent();
+        results.putExtra("grade", line);
         setResult(RESULT_OK,results);
         finish();
     }

@@ -43,6 +43,13 @@ public class RemoveCourse extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent results = new Intent();
+        setResult(RESULT_CANCELED,results);
+        finish();
+    }
+
     public void deleteCourse(View view) {
         //TODO: Remove course in spinner from db
         Course line = (Course)sp.getSelectedItem();

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class ShowGrades extends AppCompatActivity {
@@ -13,12 +14,23 @@ public class ShowGrades extends AppCompatActivity {
     public static int  RMV_GRADE_REQUEST = 44;
     public static int  ADD_DISTRIBUTION_REQUEST = 45;
     public static int  RMV_DISTRIBUTION_REQUEST = 46;
-
-
+    public GradeAdapter adapter;
+    ListView lv;
+    Course select;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        select = (Course)getIntent().getSerializableExtra("course");
+        try{
+
+            lv = (ListView)findViewById(R.id.listView);
+            adapter = new GradeAdapter(this, select.getGrades());
+            lv.setAdapter(adapter);
+
+        }catch (NullPointerException ignored){
+        }
         setContentView(R.layout.activity_show_grades);
     }
 
@@ -46,10 +58,24 @@ public class ShowGrades extends AppCompatActivity {
         if (responseCode == RESULT_OK) {
             if(requestCode == ADD_GRADE_REQUEST){
                //TODO manage creation of new grade
-
+                Grade c = MainActivity.dbHelper.createGrade(resultIntent.getStringExtra("name"),
+                        resultIntent.getStringExtra("type"),
+                        Float.parseFloat(resultIntent.getStringExtra("mark")),
+                        select.getId());
+                //Toast.makeText(getApplicationContext(), c.getName(), Toast.LENGTH_SHORT).show();
+                select.addGrade(c);
 
             }else if(requestCode == RMV_GRADE_REQUEST){
                 //TODO manage removal of new grade
+                Grade g = (Grade)resultIntent.getSerializableExtra("grade");
+                for( Grade s: select.getGrades()){
+                    if (s.getName().equals(g.getName())) {
+                        select.deleteGrade(g);
+                        MainActivity.dbHelper.deleteCourseById(g.getId());
+                        adapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
 
             }else if(requestCode == ADD_DISTRIBUTION_REQUEST){
                 //TODO manage creation of distribution type
@@ -58,8 +84,19 @@ public class ShowGrades extends AppCompatActivity {
                 //TODO manage deletion of distribution type
 
             }
+            lv = (ListView)findViewById(R.id.listView);
+            adapter = new GradeAdapter(this,select.getGrades());
+            lv.setAdapter(adapter);
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent results = new Intent();
+        results.putExtra("course", select);
+        setResult(RESULT_OK,results);
+        finish();
     }
 
     public void addGrade(View view) {

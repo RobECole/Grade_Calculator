@@ -32,6 +32,13 @@ public class AddSemester extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent results = new Intent();
+        setResult(RESULT_CANCELED,results);
+        finish();
+    }
+
     public void addDb(View view) {
         EditText year = (EditText)findViewById(R.id.yearIn);
         EditText term = (EditText)findViewById(R.id.termIn);

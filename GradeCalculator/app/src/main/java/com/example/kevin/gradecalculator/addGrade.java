@@ -13,7 +13,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 public class AddGrade extends AppCompatActivity {
-    public ArrayAdapter<Course> adapter;
+
     Spinner sp;
 
     @Override
@@ -21,8 +21,6 @@ public class AddGrade extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         sp = (Spinner)findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<Course>(this,android.R.layout.simple_spinner_item, (ArrayList<Course>)getIntent().getSerializableExtra("list"));
-        sp.setAdapter(adapter);
         setContentView(R.layout.activity_add_grade);
     }
 
@@ -41,6 +39,13 @@ public class AddGrade extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent results = new Intent();
+        setResult(RESULT_CANCELED,results);
+        finish();
     }
 
     public void addGrade(View view) {

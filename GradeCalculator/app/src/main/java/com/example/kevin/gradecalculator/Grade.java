@@ -1,12 +1,14 @@
 package com.example.kevin.gradecalculator;
 
+import java.io.Serializable;
+
 /**
  * Created by Kevin on 11/7/2015.
  * Grade is the object for each grade in a course
  * This will store the mark of each grade, the name of the grade and the category type the grade
  * belongs to
  */
-public class Grade {
+public class Grade implements Serializable {
     //instance variables
     //id is for database reference
     //name for the grade name

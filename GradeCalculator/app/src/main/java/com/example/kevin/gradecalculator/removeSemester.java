@@ -46,6 +46,13 @@ public class RemoveSemester extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent results = new Intent();
+        setResult(RESULT_CANCELED,results);
+        finish();
+    }
+
     public void deleteSemester(View view) {
         Semester line = (Semester)sp.getSelectedItem();
         Intent results = new Intent();

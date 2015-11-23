@@ -36,7 +36,7 @@ public class ShowCourses extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Course val = select.getCourses().get(Integer.parseInt("" + id));
                     Intent intent = new Intent(ShowCourses.this, ShowGrades.class);
-                    intent.putExtra("semester", val);
+                    intent.putExtra("course", val);
                     startActivityForResult(intent, SHOW_GRADES_REQUEST );
 
                 }
@@ -101,6 +101,14 @@ public class ShowCourses extends AppCompatActivity {
             lv.setAdapter(adapter);
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent results = new Intent();
+        results.putExtra("semester", select);
+        setResult(RESULT_OK,results);
+        finish();
     }
 
     public void rmvCourse(View view) {

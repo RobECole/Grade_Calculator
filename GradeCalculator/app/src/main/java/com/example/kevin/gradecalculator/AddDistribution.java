@@ -38,6 +38,13 @@ public class AddDistribution extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent results = new Intent();
+        setResult(RESULT_CANCELED,results);
+        finish();
+    }
+
     public void addDistribution(View view) {
         Spinner type = (Spinner)findViewById(R.id.distributionType);
         String disType = (String)type.getSelectedItem();
