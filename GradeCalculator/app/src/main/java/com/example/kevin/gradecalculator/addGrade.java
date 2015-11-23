@@ -1,16 +1,28 @@
 package com.example.kevin.gradecalculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
 
 public class AddGrade extends AppCompatActivity {
+    public ArrayAdapter<Course> adapter;
+    Spinner sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sp = (Spinner)findViewById(R.id.spinner);
+        adapter = new ArrayAdapter<Course>(this,android.R.layout.simple_spinner_item, (ArrayList<Course>)getIntent().getSerializableExtra("list"));
+        sp.setAdapter(adapter);
         setContentView(R.layout.activity_add_grade);
     }
 
@@ -32,6 +44,16 @@ public class AddGrade extends AppCompatActivity {
     }
 
     public void addGrade(View view) {
-        //TODO return to showGrade
+        EditText name = (EditText)findViewById(R.id.gradeName);
+        Course line = (Course)sp.getSelectedItem();
+        EditText mark = (EditText)findViewById(R.id.Mark);
+
+        Intent results = new Intent();
+        results.putExtra("name", name.getText().toString());
+        results.putExtra("course", line);
+        results.putExtra("mark", mark.getText().toString());
+
+        setResult(RESULT_OK,results);
+        finish();
     }
 }

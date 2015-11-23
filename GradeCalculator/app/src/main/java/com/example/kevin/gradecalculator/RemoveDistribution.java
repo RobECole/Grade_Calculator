@@ -1,16 +1,30 @@
 package com.example.kevin.gradecalculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
 
 public class RemoveDistribution extends AppCompatActivity {
+    public ArrayAdapter<Semester> adapter;
+    Spinner sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_distribution);
+
+
+        //TODO change the array list
+        sp = (Spinner)findViewById(R.id.spinner);
+        adapter = new ArrayAdapter<Semester>(this,android.R.layout.simple_spinner_item, (ArrayList<Semester>)getIntent().getSerializableExtra("list"));
+        sp.setAdapter(adapter);
     }
 
     @Override
@@ -33,5 +47,14 @@ public class RemoveDistribution extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void deleteDistribution(View view) {
+        Semester line = (Semester)sp.getSelectedItem();
+        Intent results = new Intent();
+        results.putExtra("semester", line);
+
+        setResult(RESULT_OK,results);
+        finish();
     }
 }

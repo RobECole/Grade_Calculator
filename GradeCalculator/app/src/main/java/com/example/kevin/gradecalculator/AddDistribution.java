@@ -1,9 +1,12 @@
 package com.example.kevin.gradecalculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 public class AddDistribution extends AppCompatActivity {
 
@@ -33,5 +36,16 @@ public class AddDistribution extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addDistribution(View view) {
+        EditText name = (EditText)findViewById(R.id.distributionType);
+        EditText weight = (EditText)findViewById(R.id.weight);
+        Intent results = new Intent();
+        results.putExtra("type", name.getText().toString());
+        results.putExtra("weight", weight.getText().toString());
+
+        setResult(RESULT_OK,results);
+        finish();
     }
 }
