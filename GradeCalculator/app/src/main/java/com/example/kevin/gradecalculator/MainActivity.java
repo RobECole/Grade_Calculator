@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private String filename = "semesters.txt";
     private String licenseUrl = "https://www.gnu.org/licenses/gpl.txt";
     public static List<Semester> semesterList = new ArrayList<>();
-    public static ArrayAdapter<Semester> adapter;
+    public static SemesterAdapter adapter;
     private ListView lv;
 
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DBHelper(this);
 
         lv = (ListView)findViewById(R.id.listView);
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,semesterList);
+        adapter = new SemesterAdapter(this, semesterList);
         lv.setAdapter(adapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, ADD_SEMESTER_REQUEST);
             }
         }
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,semesterList);
+        adapter = new SemesterAdapter(this, semesterList);
         lv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             }
             Toast.makeText(getApplicationContext(),"Failed To: " + error, Toast.LENGTH_SHORT).show();
         }
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,semesterList);
+        adapter = new SemesterAdapter(this, semesterList);
         lv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
