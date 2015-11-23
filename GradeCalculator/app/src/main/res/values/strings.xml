@@ -24,4 +24,5 @@
     <string name="action_return">Back</string>
     <string name="course">Course</string>
     <string name="distribution">Distribution</string>
+    <string name="grade">Grade</string>
 </resources>
