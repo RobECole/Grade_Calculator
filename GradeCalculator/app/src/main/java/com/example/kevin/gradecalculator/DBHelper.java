@@ -115,9 +115,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return grade;
     }
-    public Course createDistribution(String category, float distribution, int id) {
+    public  Map<String,Float> createDistribution(String category, float distribution, int id) {
         // create the object
-        Course course = getCourseById(id);
+        Map<String,Float> distributionMap = new HashMap<>();
+        distributionMap.put(category,distribution);
 
         // obtain a database connection
         SQLiteDatabase database = this.getWritableDatabase();
@@ -126,10 +127,10 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("categoryName", category);
         values.put("distribution", distribution);
-        values.put("courseID", course.getId());
+        values.put("courseID", id);
         database.insert(TABLE_COURSE_DISTRIBUTION, null, values);
 
-        return course;
+        return distributionMap;
     }
     //Getters
     //Get course by course id (id is unique)
