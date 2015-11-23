@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 public class ShowCourses extends AppCompatActivity {
     public static int  ADD_COURSE_REQUEST = 33;
     public static int  RMV_COURSE_REQUEST = 34;
+    public static int SHOW_GRADES_REQUEST = 35;
     public CourseAdapter adapter;
     ListView lv;
     Semester select;
@@ -28,7 +30,17 @@ public class ShowCourses extends AppCompatActivity {
             lv = (ListView)findViewById(R.id.listView);
             adapter = new CourseAdapter(this,select.getCourses());
             lv.setAdapter(adapter);
-           // StoryAdapter arrayAdapter = new StoryAdapter(this, data );
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Course val = select.getCourses().get(Integer.parseInt("" + id));
+                    Intent intent = new Intent(ShowCourses.this, ShowGrades.class);
+                    intent.putExtra("semester", val);
+                    startActivityForResult(intent, SHOW_GRADES_REQUEST );
+
+                }
+            });
+
         }catch (NullPointerException ignored){
         }
 
@@ -66,14 +78,12 @@ public class ShowCourses extends AppCompatActivity {
 
         if (responseCode == RESULT_OK) {
             if(requestCode == ADD_COURSE_REQUEST){
-                //TODO add course to list
                 Course c = MainActivity.dbHelper.createCourse(resultIntent.getStringExtra("coursename"));
                 select.addCourse(c);
                 //Toast.makeText(getApplicationContext(), courseList.get(0).getName(), Toast.LENGTH_SHORT).show();
 
 
             }else if(requestCode == RMV_COURSE_REQUEST){
-                //TODO remove course from list
                 Course s = (Course)resultIntent.getSerializableExtra("course");
                 for( Course c: select.getCourses()){
                     if (c.getName().equals(s.getName())) {
@@ -100,14 +110,6 @@ public class ShowCourses extends AppCompatActivity {
     public void addCourse(View view) {
         Intent intent = new Intent(this, AddCourse.class);
         startActivityForResult(intent, ADD_COURSE_REQUEST);
-    }
-
-    public void addDistribution(View view) {
-        //TODO Add Distribution
-    }
-
-    public void rmvDistribution(View view) {
-        //TODO Remove Distribution
     }
 
 }

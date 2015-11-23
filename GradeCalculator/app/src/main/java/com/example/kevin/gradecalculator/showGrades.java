@@ -1,5 +1,6 @@
 package com.example.kevin.gradecalculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,7 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class ShowGrades extends AppCompatActivity {
-
+    public static int  ADD_GRADE_REQUEST = 43;
+    public static int  RMV_GRADE_REQUEST = 44;
+    public static int  ADD_DISTRIBUTION_REQUEST = 45;
+    public static int  RMV_DISTRIBUTION_REQUEST = 46;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +37,23 @@ public class ShowGrades extends AppCompatActivity {
     }
 
     public void addGrade(View view) {
-        //TODO: go to AddGrade
+        Intent intent = new Intent(this, AddGrade.class);
+        startActivityForResult(intent, ADD_GRADE_REQUEST);
     }
 
 
     public void rmvGrade(View view) {
-        //TODO: go to RemoveGrade
+        Intent intent = new Intent(this, RemoveGrade.class);
+        startActivityForResult(intent, RMV_GRADE_REQUEST);
+    }
+
+    public void addDistribution(View view) {
+        Intent intent = new Intent(this, AddDistribution.class);
+        startActivityForResult(intent, ADD_DISTRIBUTION_REQUEST);
+    }
+
+    public void rmvDistribution(View view) {
+        Intent intent = new Intent(this, RemoveDistribution.class);
+        startActivityForResult(intent, RMV_DISTRIBUTION_REQUEST);
     }
 }

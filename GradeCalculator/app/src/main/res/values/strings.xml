@@ -25,4 +25,7 @@
     <string name="course">Course</string>
     <string name="distribution">Distribution</string>
     <string name="grade">Grade</string>
+    <string name="title_activity_add_distribution">AddDistribution</string>
+    <string name="title_activity_remove_distribution">RemoveDistribution</string>
+    <string name="title_activity_remove_grade">RemoveGrade</string>
 </resources>

@@ -54,6 +54,18 @@
             android:label="@string/title_activity_show_license"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".AddDistribution"
+            android:label="@string/title_activity_add_distribution" >
+        </activity>
+        <activity
+            android:name=".RemoveDistribution"
+            android:label="@string/title_activity_remove_distribution" >
+        </activity>
+        <activity
+            android:name=".RemoveGrade"
+            android:label="@string/title_activity_remove_grade" >
+        </activity>
     </application>
 
 </manifest>
