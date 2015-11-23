@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 public class RemoveDistribution extends AppCompatActivity {
-    public ArrayAdapter<Semester> adapter;
+    public ArrayAdapter<String> adapter;
     Spinner sp;
 
     @Override
@@ -23,7 +23,7 @@ public class RemoveDistribution extends AppCompatActivity {
 
         //TODO change the array list
         sp = (Spinner)findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<Semester>(this,android.R.layout.simple_spinner_item, (ArrayList<Semester>)getIntent().getSerializableExtra("list"));
+        adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, (ArrayList<String>)getIntent().getSerializableExtra("list"));
         sp.setAdapter(adapter);
     }
 
@@ -39,20 +39,13 @@ public class RemoveDistribution extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
     public void deleteDistribution(View view) {
-        Semester line = (Semester)sp.getSelectedItem();
+        String line = (String)sp.getSelectedItem();
         Intent results = new Intent();
-        results.putExtra("semester", line);
+        results.putExtra("distribution", line);
 
         setResult(RESULT_OK,results);
         finish();

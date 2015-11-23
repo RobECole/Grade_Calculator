@@ -29,4 +29,16 @@
     <string name="name">Name:</string>
     <string name="type">Distribution Type</string>
     <string name="mark">Grade Received:</string>
+    <string name="weight">Weight</string>
+    <string-array name="distribution_array">
+        <item>Assignment</item>
+        <item>Project</item>
+        <item>Lab</item>
+        <item>Quiz</item>
+        <item>Tutorial</item>
+        <item>Midterm</item>
+        <item>Final Exam</item>
+        <item>Essay</item>
+        <item>Other</item>
+    </string-array>
 </resources>

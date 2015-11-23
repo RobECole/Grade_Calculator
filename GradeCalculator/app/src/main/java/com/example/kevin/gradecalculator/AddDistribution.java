@@ -7,13 +7,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddDistribution extends AppCompatActivity {
 
+    List<String> distributionList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_distribution);
+        distributionList = (List<String>)getIntent().getSerializableExtra("list");
     }
 
     @Override
@@ -28,21 +34,34 @@ public class AddDistribution extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
 
     public void addDistribution(View view) {
-        EditText name = (EditText)findViewById(R.id.distributionType);
+        Spinner type = (Spinner)findViewById(R.id.distributionType);
+        String disType = (String)type.getSelectedItem();
         EditText weight = (EditText)findViewById(R.id.weight);
+
+        String temp = "";
+        int currMax = 0;
+        int value = 0;
+        for(String distribution : distributionList){
+            if(distribution.contains(disType)){
+                temp = distribution.replace(disType,"") + "";
+                if(temp.equals("")){
+                    value = 0;
+                }else{
+                    value= Integer.parseInt(temp);
+                }
+                if(value > currMax){
+                    currMax = value;
+                }
+            }
+        }
+
         Intent results = new Intent();
-        results.putExtra("type", name.getText().toString());
+        results.putExtra("type", disType+ currMax);
         results.putExtra("weight", weight.getText().toString());
 
         setResult(RESULT_OK,results);
