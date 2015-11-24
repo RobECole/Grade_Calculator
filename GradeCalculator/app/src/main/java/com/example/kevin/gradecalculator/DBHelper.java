@@ -327,7 +327,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("gradeType", grade.getType());
         values.put("gradeMark", grade.getMark());
         values.put("courseID",  grade.getCourseId());
-        int numRowsAffected = database.update(TABLE_COURSES, values, "id = ?", new String[] { "" + grade.getId() });
+        int numRowsAffected = database.update(TABLE_GRADES, values, "id = ?", new String[] { "" + grade.getId() });
 
         Log.i("DatabaseAccess", "updateGrade(" + grade + "):  numRowsAffected: " + numRowsAffected);
 
