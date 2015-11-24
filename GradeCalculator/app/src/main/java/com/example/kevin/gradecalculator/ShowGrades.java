@@ -112,9 +112,12 @@ public class ShowGrades extends AppCompatActivity {
                     //Toast.makeText(getApplicationContext(), "TEST!", Toast.LENGTH_SHORT).show();
                     boolean validDistribution = false;
                     List<String> distributions = select.getDistributionNames();
-                    if(distributions.contains(val.getType())==true){
+                    if(distributions.contains(val.getType()) == false){
                         validDistribution = true;
-                        List<String> modifiedDis = Arrays.asList(val.getType());
+                        final String type = val.getType();
+                        List<String> modifiedDis = new ArrayList<String>() {{
+                            add(type);
+                        }};
                         distributions.remove(val.getType());
                         modifiedDis.addAll(distributions);
                         distributions = modifiedDis;
