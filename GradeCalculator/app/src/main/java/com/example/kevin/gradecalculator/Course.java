@@ -75,7 +75,7 @@ public class Course implements Serializable{
         return id;
     }
     //Setters
-    public void setGrades(ArrayList<Grade> grades){
+    public void setGrades(List<Grade> grades){
         this.grades = grades;
     }
     public void setCategoryDistribution(Map<String, Float> categoryDistribution){
@@ -145,7 +145,6 @@ public class Course implements Serializable{
     @Override
     public String toString(){
         String Course = name;
-
         return Course;
     }
 
