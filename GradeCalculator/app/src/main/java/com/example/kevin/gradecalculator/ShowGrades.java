@@ -202,9 +202,8 @@ public class ShowGrades extends AppCompatActivity {
         //Get each distribution
         for (Map.Entry<String, Float> entry : distributions.entrySet())
         {
-            String category = entry.getKey();
             float distribution = entry.getValue();
-            float sumEachCategory = 0f;
+            float sumEachCategory = 0;
             int numMarks = 0;
             //sum all grades for a distribution
             for(Grade grade : grades){
@@ -213,9 +212,11 @@ public class ShowGrades extends AppCompatActivity {
                     numMarks ++;
                 }
             }
-            float total = sumEachCategory/numMarks;
-            float distributedTotal = total*distribution;
-            mark += distributedTotal;
+            if(numMarks > 0) {
+                float total = sumEachCategory / numMarks;
+                float distributedTotal = total * distribution;
+                mark += distributedTotal;
+            }
         }
         Toast.makeText(getApplicationContext(), "Mark: " + mark, Toast.LENGTH_SHORT).show();
         TextView courseName = (TextView) findViewById(R.id.lbl_CourseName);
