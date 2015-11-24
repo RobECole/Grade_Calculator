@@ -151,6 +151,7 @@ public class DBHelper extends SQLiteOpenHelper {
             course = new Course(courseName, courseMark);
             course.setId(id);
         }
+        course.setGrades(getGradesByCourseId(courseId));
         course.setCategoryDistribution(getDistribution(courseId));
         Log.i("DatabaseAccess", "getCourse(" + courseId + "):  course: " + course);
         cursor.close();
