@@ -19,6 +19,8 @@ public class ShowGrades extends AppCompatActivity {
     public static int  RMV_GRADE_REQUEST = 44;
     public static int  ADD_DISTRIBUTION_REQUEST = 45;
     public static int  RMV_DISTRIBUTION_REQUEST = 46;
+    public static int  EDIT_GRADES_REQUEST = 47;
+
     public GradeAdapter adapter;
     ListView lv;
     Course select;
@@ -33,6 +35,7 @@ public class ShowGrades extends AppCompatActivity {
             lv = (ListView)findViewById(R.id.listView);
             adapter = new GradeAdapter(this, select.getGrades());
             lv.setAdapter(adapter);
+
 
         }catch (NullPointerException ignored){
         }
@@ -100,6 +103,20 @@ public class ShowGrades extends AppCompatActivity {
             lv = (ListView)findViewById(R.id.listView);
             adapter = new GradeAdapter(this,select.getGrades());
             lv.setAdapter(adapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Grade val = select.getGrades().get(Integer.parseInt("" + id));
+                    //Toast.makeText(getApplicationContext(), "TEST!", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(ShowGrades.this, EditGrade.class);
+                    intent.putExtra("grade", val);
+                    intent.putExtra("mark", val);
+                    intent.putExtra("list", (Serializable)select.getDistributionNames());
+                    startActivityForResult(intent, EDIT_GRADES_REQUEST);
+
+                }
+            });
         }else{
             if(requestCode == ADD_GRADE_REQUEST){
                 response = "Add Grade";
@@ -125,7 +142,7 @@ public class ShowGrades extends AppCompatActivity {
 
     public void addGrade(View view) {
         Intent intent = new Intent(this, AddGrade.class);
-        intent.putExtra("list", (Serializable)select.getDistributionNames());
+        intent.putExtra("list", (Serializable) select.getDistributionNames());
         startActivityForResult(intent, ADD_GRADE_REQUEST);
     }
 
