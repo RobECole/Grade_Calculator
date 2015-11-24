@@ -94,7 +94,7 @@ public class Course implements Serializable{
     public void addGrade(Grade grade){
         this.grades.add(grade);
     }
-    public void addCategoryDistribution(String category, Float distribution){
+    public void addCategoryDistribution(String category, float distribution){
         this.categoryDistribution.put(category,distribution);
     }
     public void addCategoryDistribution(Map<String, Float> categoryDistribution){

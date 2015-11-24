@@ -91,7 +91,7 @@ public class ShowGrades extends AppCompatActivity {
             }else if(requestCode == ADD_DISTRIBUTION_REQUEST){
                 //TODO manage creation of distribution type
                 String type = resultIntent.getStringExtra("type");
-                Float dist = Float.parseFloat(resultIntent.getStringExtra("weight"));
+                float dist = Float.parseFloat(resultIntent.getStringExtra("weight"));
                 Map<String,Float> categoryDistribution = MainActivity.dbHelper.createDistribution(type, dist, (int) select.getId());
                 select.addCategoryDistribution(categoryDistribution);
                 response = "Add Distribution";
