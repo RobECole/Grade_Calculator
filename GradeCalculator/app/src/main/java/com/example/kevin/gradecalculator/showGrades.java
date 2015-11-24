@@ -110,8 +110,8 @@ public class ShowGrades extends AppCompatActivity {
                     //Toast.makeText(getApplicationContext(), "TEST!", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(ShowGrades.this, EditGrade.class);
-                    intent.putExtra("grade", val);
-                    intent.putExtra("mark", val);
+                    intent.putExtra("grade", val.getName());
+                    intent.putExtra("mark", val.getMark());
                     intent.putExtra("list", (Serializable)select.getDistributionNames());
                     startActivityForResult(intent, EDIT_GRADES_REQUEST);
 
