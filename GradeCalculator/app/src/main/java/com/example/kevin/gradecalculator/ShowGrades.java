@@ -263,6 +263,9 @@ public class ShowGrades extends AppCompatActivity {
         TextView courseMark = (TextView) findViewById(R.id.lbl_CourseMark);
         courseName.setText(select.getName());
         courseMark.setText("" + mark);
+        Course course = new Course(select.getName(), mark);
+        course.setId(select.getId());
+        MainActivity.dbHelper.updateCourse(course);
         select.setMark(mark);
     }
 }
