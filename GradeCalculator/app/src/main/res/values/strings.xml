@@ -19,7 +19,7 @@
     <string name="save">Save</string>
     <string name="ret">Return</string>
     <string name="action_license">License</string>
-    <string name="action_return">Back</string>
+    <string name="action_return">Save</string>
     <string name="course">Course</string>
     <string name="distribution">Distribution</string>
     <string name="grade">Grade</string>
