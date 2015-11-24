@@ -44,11 +44,9 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/gradeName"
-        android:layout_alignBottom="@+id/textView6"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/textView5"
-        android:layout_toEndOf="@+id/textView5" />
+        android:layout_above="@+id/textView5"
+        android:layout_alignRight="@+id/gradeType"
+        android:layout_alignEnd="@+id/gradeType" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -64,9 +62,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gradeMark"
-        android:layout_above="@+id/textView5"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_alignRight="@+id/gradeType"
+        android:layout_alignEnd="@+id/gradeType" />
 
     <Button
         android:layout_width="wrap_content"
