@@ -24,6 +24,15 @@ public class EditGrade extends AppCompatActivity {
         sp = (Spinner)findViewById(R.id.gradeType);
         adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, (ArrayList<String>)getIntent().getSerializableExtra("list"));
         sp.setAdapter(adapter);
+
+        EditText name = (EditText)findViewById(R.id.gradeName);
+        EditText mark = (EditText)findViewById(R.id.gradeMark);
+
+        String grade = getIntent().getStringExtra("grade");
+        Float value = getIntent().getFloatExtra("mark", 0);
+
+        name.setText("" + grade);
+        mark.setText("" + value);
     }
 
     @Override
