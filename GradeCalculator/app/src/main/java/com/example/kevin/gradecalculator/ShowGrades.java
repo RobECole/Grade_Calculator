@@ -111,23 +111,19 @@ public class ShowGrades extends AppCompatActivity {
                     Grade val = select.getGrades().get(Integer.parseInt("" + id));
                     //Toast.makeText(getApplicationContext(), "TEST!", Toast.LENGTH_SHORT).show();
                     boolean validDistribution = false;
-                    for(String key : select.getDistributionNames()){
-                        if(key.equals(val.getType())){
-                            validDistribution = true;
-                            break;
-                        }
-                    }
-
-                    List<String> modifiedDis = Arrays.asList(val.getType());
                     List<String> distributions = select.getDistributionNames();
-                    distributions.remove(val.getType());
-                    modifiedDis.addAll(distributions);
+                    if(distributions.contains(val.getType())==true){
+                        validDistribution = true;
+                        List<String> modifiedDis = Arrays.asList(val.getType());
+                        distributions.remove(val.getType());
+                        modifiedDis.addAll(distributions);
+                        distributions = modifiedDis;
+                    }
                     Intent intent = new Intent(ShowGrades.this, EditGrade.class);
                     intent.putExtra("grade", val.getName());
                     intent.putExtra("mark", val.getMark());
-                    intent.putExtra("type", (Serializable) modifiedDis);
                     intent.putExtra("validType", validDistribution);
-                    intent.putExtra("list", (Serializable) select.getDistributionNames());
+                    intent.putExtra("list", (Serializable) distributions);
                     startActivityForResult(intent, EDIT_GRADES_REQUEST);
 
                 }
