@@ -85,7 +85,7 @@ public class ShowGrades extends AppCompatActivity {
                 String type = resultIntent.getStringExtra("type");
                 Float dist = Float.parseFloat(resultIntent.getStringExtra("weight"));
                 Map<String,Float> categoryDistribution = MainActivity.dbHelper.createDistribution(type, dist, (int) select.getId());
-                select.setCategoryDistribution(categoryDistribution);
+                select.addCategoryDistribution(categoryDistribution);
                 response = "Add Distribution";
             }else if(requestCode == RMV_DISTRIBUTION_REQUEST){
                 //TODO manage deletion of distribution type

@@ -94,8 +94,14 @@ public class Course implements Serializable{
     public void addGrade(Grade grade){
         this.grades.add(grade);
     }
-    public void addCategoryDistribution(String category, float  distribution){
-        this.categoryDistribution.put(category, distribution);
+    public void addCategoryDistribution(String category, Float distribution){
+        this.categoryDistribution.put(category,distribution);
+    }
+    public void addCategoryDistribution(Map<String, Float> categoryDistribution){
+        for (Map.Entry<String, Float> entry : categoryDistribution.entrySet())
+        {
+            this.categoryDistribution.put(entry.getKey(), entry.getValue());
+        }
     }
     //Deleters
     public void deleteGrade(Grade grade){
@@ -123,7 +129,7 @@ public class Course implements Serializable{
             addCategoryDistribution(category, distribution);
         }
     }
-    public void updateDistribution(String category, long distribution){
+    public void updateDistribution(String category, Float distribution){
         deleteCategory(category);
         addCategoryDistribution(category, distribution);
     }

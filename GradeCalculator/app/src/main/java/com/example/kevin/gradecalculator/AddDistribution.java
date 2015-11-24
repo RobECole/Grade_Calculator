@@ -68,7 +68,7 @@ public class AddDistribution extends AppCompatActivity {
         }
 
         Intent results = new Intent();
-        results.putExtra("type", (disType+ currMax + 1));
+        results.putExtra("type", disType + (currMax + 1));
         results.putExtra("weight", weight.getText().toString());
 
         setResult(RESULT_OK,results);
