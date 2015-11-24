@@ -3,6 +3,7 @@ package com.example.kevin.gradecalculator;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +44,11 @@ public class ShowGrades extends AppCompatActivity {
         }catch (NullPointerException ignored){
         }
         setContentView(R.layout.activity_show_grades);
+        updateMark();
+    }
+    @Override
+    public void onStart(){
+        super.onStart();
         updateMark();
     }
 
@@ -202,23 +208,26 @@ public class ShowGrades extends AppCompatActivity {
         //Get each distribution
         for (Map.Entry<String, Float> entry : distributions.entrySet())
         {
+            String category = entry.getKey();
             float distribution = entry.getValue();
+            Toast.makeText(getApplicationContext(), "Dis: " + distribution, Toast.LENGTH_SHORT).show();
             float sumEachCategory = 0;
             int numMarks = 0;
             //sum all grades for a distribution
             for(Grade grade : grades){
-                if(grade.getType().equals(distribution)){
-                    sumEachCategory += grade.getMark();
+                if(grade.getType().equals(category)){
+                    sumEachCategory = sumEachCategory + grade.getMark();
                     numMarks ++;
+                    Log.d("Add Grade-Distribution","Sum: " + sumEachCategory + " Mark: " + grade.getMark() + " Num: " + numMarks);
                 }
             }
             if(numMarks > 0) {
                 float total = sumEachCategory / numMarks;
-                float distributedTotal = total * distribution;
+                float distributedTotal = total * (distribution/100);
                 mark += distributedTotal;
+                Log.d("Add Distribution-Total","Total: " + mark + " Distributed: " + distributedTotal + " Even: " + total);
             }
         }
-        Toast.makeText(getApplicationContext(), "Mark: " + mark, Toast.LENGTH_SHORT).show();
         TextView courseName = (TextView) findViewById(R.id.lbl_CourseName);
         TextView courseMark = (TextView) findViewById(R.id.lbl_CourseMark);
         courseName.setText(select.getName());

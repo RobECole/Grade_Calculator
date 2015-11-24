@@ -53,7 +53,7 @@ public class GradeAdapter extends BaseAdapter {
         TextView lblName = (TextView)convertView.findViewById(R.id.lbl_GradeName);
         lblName.setText("Name: " + gradeToDisplay.getName());
 
-        TextView lblType = (TextView)convertView.findViewById(R.id.lbl_GradeMark);
+        TextView lblType = (TextView)convertView.findViewById(R.id.lbl_GradeType);
         lblType.setText("Type: " + gradeToDisplay.getType());
 
         TextView lblMark = (TextView)convertView.findViewById(R.id.lbl_GradeMark);
