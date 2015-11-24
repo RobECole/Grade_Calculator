@@ -76,15 +76,14 @@ public class ShowCourses extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent resultIntent) {
         super.onActivityResult(requestCode, responseCode, resultIntent);
-
+        String response = "";
         if (responseCode == RESULT_OK) {
             if(requestCode == ADD_COURSE_REQUEST){
                 Course c = MainActivity.dbHelper.createCourse(resultIntent.getStringExtra("coursename"));
                 //Toast.makeText(getApplicationContext(), c.getName(), Toast.LENGTH_SHORT).show();
                 select.addCourse(c);
-
-
-
+                response = "Add Course";
+                Toast.makeText(getApplicationContext(), "Successful: " + response, Toast.LENGTH_SHORT).show();
             }else if(requestCode == RMV_COURSE_REQUEST){
                 Course s = (Course)resultIntent.getSerializableExtra("course");
                 for( Course c: select.getCourses()){
@@ -95,12 +94,22 @@ public class ShowCourses extends AppCompatActivity {
                         break;
                     }
                 }
+                response = "Remove Course";
+                Toast.makeText(getApplicationContext(), "Successful: " + response, Toast.LENGTH_SHORT).show();
             }
             lv = (ListView)findViewById(R.id.listView);
             adapter = new CourseAdapter(this,select.getCourses());
             lv.setAdapter(adapter);
+        }else{
+            if(requestCode == ADD_COURSE_REQUEST){
+                response = "Add Course";
+            }else if(requestCode == RMV_COURSE_REQUEST){
+                response = "Remove Course";
+            }else if(requestCode == SHOW_GRADES_REQUEST){
+                response = "Show Grades";
+            }
+            Toast.makeText(getApplicationContext(), "Failed to: " + response, Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override

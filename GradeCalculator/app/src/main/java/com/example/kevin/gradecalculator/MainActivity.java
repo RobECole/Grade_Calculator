@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     public static SemesterAdapter adapter;
     private ListView lv;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,8 +131,7 @@ public class MainActivity extends AppCompatActivity {
            if(requestCode == ADD_SEMESTER_REQUEST){
                Semester s = new Semester(resultIntent.getStringExtra("Term"), Integer.parseInt(resultIntent.getStringExtra("Year")));
                semesterList.add(s);
-
-
+               Toast.makeText(getApplicationContext(),"Add semester successful", Toast.LENGTH_SHORT).show();
            }else if(requestCode == RMV_SEMESTER_REQUEST){
                Semester s = (Semester)resultIntent.getSerializableExtra("semester");
                for( Semester c: semesterList){
@@ -143,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                        break;
                    }
                }
+               Toast.makeText(getApplicationContext(),"Remove semester successful", Toast.LENGTH_SHORT).show();
            }else if(requestCode == SHOW_COURSE_REQUEST){
                Semester s = (Semester)resultIntent.getSerializableExtra("semester");
                for( Semester c: semesterList){
@@ -156,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
            }
 
         }else if(responseCode == RESULT_CANCELED){
-            String error = "Do Things";
+            String error = "";
             if(requestCode == ADD_SEMESTER_REQUEST){
                 error = "Add Semester";
             }else if(requestCode == RMV_SEMESTER_REQUEST){

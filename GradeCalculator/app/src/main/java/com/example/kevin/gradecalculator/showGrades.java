@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class ShowGrades extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent resultIntent) {
         super.onActivityResult(requestCode, responseCode, resultIntent);
-
+        String response = "";
         if (responseCode == RESULT_OK) {
             if(requestCode == ADD_GRADE_REQUEST){
                //TODO manage creation of new grade
@@ -65,9 +66,8 @@ public class ShowGrades extends AppCompatActivity {
                         resultIntent.getStringExtra("type"),
                         Float.parseFloat(resultIntent.getStringExtra("mark")),
                         select.getId());
-                //Toast.makeText(getApplicationContext(), c.getName(), Toast.LENGTH_SHORT).show();
                 select.addGrade(c);
-
+                response = "Add Grade";
             }else if(requestCode == RMV_GRADE_REQUEST){
                 //TODO manage removal of new grade
                 Grade g = (Grade)resultIntent.getSerializableExtra("grade");
@@ -79,24 +79,37 @@ public class ShowGrades extends AppCompatActivity {
                         break;
                     }
                 }
-
+                response = "Remove Grade";
             }else if(requestCode == ADD_DISTRIBUTION_REQUEST){
                 //TODO manage creation of distribution type
                 String type = resultIntent.getStringExtra("type");
                 Float dist = Float.parseFloat(resultIntent.getStringExtra("weight"));
                 Map<String,Float> categoryDistribution = MainActivity.dbHelper.createDistribution(type, dist, (int) select.getId());
                 select.setCategoryDistribution(categoryDistribution);
-
+                response = "Add Distribution";
             }else if(requestCode == RMV_DISTRIBUTION_REQUEST){
                 //TODO manage deletion of distribution type
-
-
+                String type = resultIntent.getStringExtra("distribution");
+                boolean success = MainActivity.dbHelper.deleteDistribution(select.getId(), type);
+                select.deleteCategory(type);
+                response = "Remove Distribution";
             }
+            Toast.makeText(getApplicationContext(), "Successful: " + response, Toast.LENGTH_SHORT).show();
             lv = (ListView)findViewById(R.id.listView);
             adapter = new GradeAdapter(this,select.getGrades());
             lv.setAdapter(adapter);
+        }else{
+            if(requestCode == ADD_GRADE_REQUEST){
+                response = "Add Grade";
+            }else if(requestCode == RMV_GRADE_REQUEST){
+                response = "Remove Grade";
+            }else if(requestCode == ADD_DISTRIBUTION_REQUEST){
+                response = "Add Distribution";
+            }else if(requestCode == RMV_DISTRIBUTION_REQUEST){
+                response = "Remove Distribution";
+            }
+            Toast.makeText(getApplicationContext(), "Failed to: " + response, Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override

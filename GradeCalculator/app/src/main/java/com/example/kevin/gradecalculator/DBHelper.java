@@ -254,7 +254,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // delete the contact
         int numRowsAffected = database.delete(TABLE_COURSES, "id = ?", new String[] { "" + id });
 
-        Log.i("DatabaseAccess", "deleteContact(" + id + "):  numRowsAffected: " + numRowsAffected);
+        Log.i("DatabaseAccess", "deleteGrade(" + id + "):  numRowsAffected: " + numRowsAffected);
 
         // verify that the contact was deleted successfully
         return (numRowsAffected == 1);
@@ -266,7 +266,19 @@ public class DBHelper extends SQLiteOpenHelper {
         // delete the contact
         int numRowsAffected = database.delete(TABLE_GRADES, "id = ?", new String[] { "" + id });
 
-        Log.i("DatabaseAccess", "deleteContact(" + id + "):  numRowsAffected: " + numRowsAffected);
+        Log.i("DatabaseAccess", "deleteGrade(" + id + "):  numRowsAffected: " + numRowsAffected);
+
+        // verify that the contact was deleted successfully
+        return (numRowsAffected == 1);
+    }
+    public boolean deleteDistribution(long id, String name) {
+        // obtain a database connection
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        // delete the contact
+        int numRowsAffected = database.delete(TABLE_COURSE_DISTRIBUTION, "courseID = ? AND categoryName = ?", new String[] { "" + id, "" + name});
+
+        Log.i("DatabaseAccess", "deleteDistribution(" + id +" : " + name + "):  numRowsAffected: " + numRowsAffected);
 
         // verify that the contact was deleted successfully
         return (numRowsAffected == 1);
@@ -278,7 +290,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // delete the contact
         int numRowsAffected = database.delete(TABLE_COURSES, "", new String[] {});
 
-        Log.i("DatabaseAccess", "deleteAllContacts():  numRowsAffected: " + numRowsAffected);
+        Log.i("DatabaseAccess", "deleteAllCourses():  numRowsAffected: " + numRowsAffected);
     }
     public void deleteAllGrades() {
         // obtain a database connection
@@ -287,7 +299,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // delete the contact
         int numRowsAffected = database.delete(TABLE_GRADES, "", new String[] {});
 
-        Log.i("DatabaseAccess", "deleteAllContacts():  numRowsAffected: " + numRowsAffected);
+        Log.i("DatabaseAccess", "deleteAllGrades():  numRowsAffected: " + numRowsAffected);
     }
     //Updaters
     public boolean updateCourse(Course course) {
