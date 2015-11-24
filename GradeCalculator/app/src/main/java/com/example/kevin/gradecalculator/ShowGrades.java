@@ -100,6 +100,10 @@ public class ShowGrades extends AppCompatActivity {
                 boolean success = MainActivity.dbHelper.deleteDistribution(select.getId(), type);
                 select.deleteCategory(type);
                 response = "Remove Distribution";
+            }else if(requestCode == EDIT_GRADES_REQUEST){
+                select.setName(resultIntent.getStringExtra("name"));
+                select.setMark(resultIntent.getFloatExtra("mark", select.getMark()));
+                //TODO update course distribution
             }
             Toast.makeText(getApplicationContext(), "Successful: " + response, Toast.LENGTH_SHORT).show();
             lv = (ListView)findViewById(R.id.listView);
@@ -110,10 +114,10 @@ public class ShowGrades extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Grade val = select.getGrades().get(Integer.parseInt("" + id));
                     //Toast.makeText(getApplicationContext(), "TEST!", Toast.LENGTH_SHORT).show();
-                    boolean validDistribution = false;
+                    boolean validDistribution = true;
                     List<String> distributions = select.getDistributionNames();
                     if(distributions.contains(val.getType()) == false){
-                        validDistribution = true;
+                        validDistribution = false;
                         final String type = val.getType();
                         List<String> modifiedDis = new ArrayList<String>() {{
                             add(type);
