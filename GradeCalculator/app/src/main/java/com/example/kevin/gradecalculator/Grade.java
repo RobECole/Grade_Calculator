@@ -49,7 +49,7 @@ public class Grade implements Serializable {
     public void setType(String type){
         this.type =type;
     }
-    public void setMark(int mark){
+    public void setMark(float mark){
         this.mark = mark;
     }
     public void setId(long id){

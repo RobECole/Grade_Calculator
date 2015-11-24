@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -22,10 +23,10 @@ public class ShowGrades extends AppCompatActivity {
     public static int  ADD_DISTRIBUTION_REQUEST = 45;
     public static int  RMV_DISTRIBUTION_REQUEST = 46;
     public static int  EDIT_GRADES_REQUEST = 47;
-
     public GradeAdapter adapter;
-    ListView lv;
-    Course select;
+    private ListView lv;
+    private Course select;
+    private int currGradeId = 0;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +102,19 @@ public class ShowGrades extends AppCompatActivity {
                 select.deleteCategory(type);
                 response = "Remove Distribution";
             }else if(requestCode == EDIT_GRADES_REQUEST){
-                select.setName(resultIntent.getStringExtra("name"));
-                select.setMark(resultIntent.getFloatExtra("mark", select.getMark()));
-                //TODO update course distribution
+                Grade val = select.getGrades().get(Integer.parseInt("" + currGradeId));
+                val.setName(resultIntent.getStringExtra("name"));
+                val.setMark(resultIntent.getFloatExtra("mark", select.getMark()));
+                val.setType( resultIntent.getStringExtra("type"));
+                MainActivity.dbHelper.updateGrade(val);
+                for (Grade s : select.getGrades()) {
+                    if (s.getName().equals(val.getName())) {
+                        select.deleteGrade(val);
+                        break;
+                    }
+                }
+                select.addGrade(val);
+                response = "Update Grade";
             }
             Toast.makeText(getApplicationContext(), "Successful: " + response, Toast.LENGTH_SHORT).show();
             lv = (ListView)findViewById(R.id.listView);
@@ -112,6 +123,7 @@ public class ShowGrades extends AppCompatActivity {
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    currGradeId = Integer.parseInt("" + id);
                     Grade val = select.getGrades().get(Integer.parseInt("" + id));
                     //Toast.makeText(getApplicationContext(), "TEST!", Toast.LENGTH_SHORT).show();
                     boolean validDistribution = true;
@@ -144,6 +156,8 @@ public class ShowGrades extends AppCompatActivity {
                 response = "Add Distribution";
             }else if(requestCode == RMV_DISTRIBUTION_REQUEST){
                 response = "Remove Distribution";
+            }else if(requestCode == EDIT_GRADES_REQUEST){
+                response = "Update Grade";
             }
             Toast.makeText(getApplicationContext(), "Failed to: " + response, Toast.LENGTH_SHORT).show();
         }
@@ -203,5 +217,9 @@ public class ShowGrades extends AppCompatActivity {
             Float distributedTotal = total*distribution;
             mark += distributedTotal;
         }
+        TextView courseName = (TextView) findViewById(R.id.lbl_CourseName);
+        TextView courseMark = (TextView) findViewById(R.id.lbl_CourseMark);
+        courseName.setText(select.getName());
+        courseMark.setText("" + select.getMark());
     }
 }
