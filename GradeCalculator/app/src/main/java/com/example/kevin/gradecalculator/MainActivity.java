@@ -2,6 +2,10 @@ package com.example.kevin.gradecalculator;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public static List<Semester> semesterList = new ArrayList<>();
     public static SemesterAdapter adapter;
     private ListView lv;
-
+    MediaPlayer mediaPlayer = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Semester val = (Semester) semesterList.get(Integer.parseInt("" + id));
+                Semester val = semesterList.get(Integer.parseInt("" + id));
                 Intent intent = new Intent(MainActivity.this, ShowCourses.class);
                 intent.putExtra("semester", val);
                 startActivityForResult(intent, SHOW_COURSE_REQUEST );
@@ -74,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 rmvSemester(view);
             }
         });
+
+        initializeMusic();
 
     }
 
@@ -98,8 +104,37 @@ public class MainActivity extends AppCompatActivity {
         adapter = new SemesterAdapter(this, semesterList);
         lv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        if (mediaPlayer == null) {
+            initializeMusic();
+        }
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        if (!(mediaPlayer == null)) {
+            mediaPlayer.pause();
+        }
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if (!(mediaPlayer == null)) {
+            mediaPlayer.start();
+        }
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if (!(mediaPlayer == null)) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
     @Override
     public void onStop(){
         super.onStop();
@@ -237,6 +272,16 @@ public class MainActivity extends AppCompatActivity {
             Log.e("login activity", "Can not read file: " + e.toString());
         }
         return semesters;
+    }
+
+    public void initializeMusic(){
+        try {
+            mediaPlayer = MediaPlayer.create(this, R.raw.bensound_clearday);
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.prepare();
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+        }catch(Exception e){}
     }
 
 }
