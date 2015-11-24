@@ -104,7 +104,7 @@ public class ShowGrades extends AppCompatActivity {
             }else if(requestCode == EDIT_GRADES_REQUEST){
                 Grade val = select.getGrades().get(Integer.parseInt("" + currGradeId));
                 val.setName(resultIntent.getStringExtra("name"));
-                val.setMark(resultIntent.getFloatExtra("mark", select.getMark()));
+                val.setMark(Float.parseFloat(resultIntent.getStringExtra("mark")));
                 val.setType( resultIntent.getStringExtra("type"));
                 MainActivity.dbHelper.updateGrade(val);
                 for (Grade s : select.getGrades()) {
@@ -217,9 +217,10 @@ public class ShowGrades extends AppCompatActivity {
             Float distributedTotal = total*distribution;
             mark += distributedTotal;
         }
+        Toast.makeText(getApplicationContext(), "Mark: " + mark, Toast.LENGTH_SHORT).show();
         TextView courseName = (TextView) findViewById(R.id.lbl_CourseName);
         TextView courseMark = (TextView) findViewById(R.id.lbl_CourseMark);
         courseName.setText(select.getName());
-        courseMark.setText("" + select.getMark());
+        courseMark.setText("" + mark);
     }
 }
