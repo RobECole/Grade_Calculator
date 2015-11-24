@@ -126,10 +126,10 @@ public class ShowGrades extends AppCompatActivity {
                     currGradeId = Integer.parseInt("" + id);
                     Grade val = select.getGrades().get(Integer.parseInt("" + id));
                     //Toast.makeText(getApplicationContext(), "TEST!", Toast.LENGTH_SHORT).show();
-                    boolean validDistribution = true;
+                    boolean validDistribution = false;
                     List<String> distributions = select.getDistributionNames();
-                    if(distributions.contains(val.getType()) == false){
-                        validDistribution = false;
+                    if(distributions.contains(val.getType()) == true){
+                        validDistribution = true;
                         final String type = val.getType();
                         List<String> modifiedDis = new ArrayList<String>() {{
                             add(type);
@@ -198,13 +198,13 @@ public class ShowGrades extends AppCompatActivity {
     public void updateMark(){
         Map<String, Float> distributions = select.getCategoryDistribution();
         List<Grade> grades = select.getGrades();
-        Float mark = 0f;
+        float mark = 0;
         //Get each distribution
         for (Map.Entry<String, Float> entry : distributions.entrySet())
         {
             String category = entry.getKey();
-            Float distribution = entry.getValue();
-            Float sumEachCategory = 0f;
+            float distribution = entry.getValue();
+            float sumEachCategory = 0f;
             int numMarks = 0;
             //sum all grades for a distribution
             for(Grade grade : grades){
@@ -213,8 +213,8 @@ public class ShowGrades extends AppCompatActivity {
                     numMarks ++;
                 }
             }
-            Float total = sumEachCategory/numMarks;
-            Float distributedTotal = total*distribution;
+            float total = sumEachCategory/numMarks;
+            float distributedTotal = total*distribution;
             mark += distributedTotal;
         }
         Toast.makeText(getApplicationContext(), "Mark: " + mark, Toast.LENGTH_SHORT).show();
