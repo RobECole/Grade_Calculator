@@ -13,15 +13,18 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 public class AddGrade extends AppCompatActivity {
-
+    public ArrayAdapter<String> adapter;
     Spinner sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        sp = (Spinner)findViewById(R.id.spinner);
         setContentView(R.layout.activity_add_grade);
+
+        //TODO change the array list
+        sp = (Spinner)findViewById(R.id.spinner2);
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, (ArrayList<String>)getIntent().getSerializableExtra("list"));
+        sp.setAdapter(adapter);
     }
 
     @Override
@@ -50,12 +53,12 @@ public class AddGrade extends AppCompatActivity {
 
     public void addGrade(View view) {
         EditText name = (EditText)findViewById(R.id.gradeName);
-        Course line = (Course)sp.getSelectedItem();
+        String line = (String)sp.getSelectedItem();
         EditText mark = (EditText)findViewById(R.id.Mark);
 
         Intent results = new Intent();
         results.putExtra("name", name.getText().toString());
-        results.putExtra("course", line);
+        results.putExtra("type", line);
         results.putExtra("mark", mark.getText().toString());
 
         setResult(RESULT_OK,results);

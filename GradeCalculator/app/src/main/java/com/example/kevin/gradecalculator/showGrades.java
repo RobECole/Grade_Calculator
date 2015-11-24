@@ -125,6 +125,7 @@ public class ShowGrades extends AppCompatActivity {
 
     public void addGrade(View view) {
         Intent intent = new Intent(this, AddGrade.class);
+        intent.putExtra("list", (Serializable)select.getDistributionNames());
         startActivityForResult(intent, ADD_GRADE_REQUEST);
     }
 
