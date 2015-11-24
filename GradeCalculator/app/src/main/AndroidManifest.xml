@@ -66,6 +66,10 @@
             android:name=".RemoveGrade"
             android:label="@string/title_activity_remove_grade" >
         </activity>
+        <activity
+            android:name=".EditGrade"
+            android:label="@string/title_activity_edit_grade" >
+        </activity>
     </application>
 
 </manifest>
