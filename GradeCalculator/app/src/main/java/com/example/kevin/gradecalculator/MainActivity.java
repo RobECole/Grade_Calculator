@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void initializeMusic(){
         try {
-            mediaPlayer = MediaPlayer.create(this, R.raw.bensound_clearday);
+            mediaPlayer = MediaPlayer.create(this, R.raw.bensoundclearday);
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.prepare();
             mediaPlayer.setLooping(true);
