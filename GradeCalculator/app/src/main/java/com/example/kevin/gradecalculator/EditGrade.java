@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,17 @@ public class EditGrade extends AppCompatActivity {
         setContentView(R.layout.activity_edit_grade);
 
         sp = (Spinner)findViewById(R.id.gradeType);
-        adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, (ArrayList<String>)getIntent().getSerializableExtra("list"));
+        if(getIntent().getBooleanExtra("validType", true)) {
+            TextView warning = (TextView)findViewById(R.id.warning);
+            warning.setText("");
+            warning.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            adapter= new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, (ArrayList<String>) getIntent().getSerializableExtra("type"));
+        }else{
+            TextView warning = (TextView)findViewById(R.id.warning);
+            warning.setText("Previous Distribution does not exist!");
+            warning.setCompoundDrawablesWithIntrinsicBounds(R.drawable.skull, 0, 0, 0);
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, (ArrayList<String>) getIntent().getSerializableExtra("list"));
+        }
         sp.setAdapter(adapter);
 
         EditText name = (EditText)findViewById(R.id.gradeName);
