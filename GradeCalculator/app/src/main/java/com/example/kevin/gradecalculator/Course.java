@@ -145,6 +145,7 @@ public class Course implements Serializable{
     @Override
     public String toString(){
         String Course = name;
+
         return Course;
     }
 

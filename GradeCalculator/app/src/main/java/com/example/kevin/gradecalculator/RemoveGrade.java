@@ -12,7 +12,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 public class RemoveGrade extends AppCompatActivity {
-    public ArrayAdapter<Semester> adapter;
+    public ArrayAdapter<Course> adapter;
     Spinner sp;
 
     @Override
@@ -21,7 +21,7 @@ public class RemoveGrade extends AppCompatActivity {
         setContentView(R.layout.activity_remove_grade);
 
         sp = (Spinner)findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<Semester>(this,android.R.layout.simple_spinner_item, (ArrayList<Semester>)getIntent().getSerializableExtra("list"));
+        adapter = new ArrayAdapter<Course>(this,android.R.layout.simple_spinner_item, (ArrayList<Course>)getIntent().getSerializableExtra("list"));
         sp.setAdapter(adapter);
     }
 

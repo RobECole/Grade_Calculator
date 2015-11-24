@@ -217,6 +217,7 @@ public class ShowGrades extends AppCompatActivity {
 
     public void rmvGrade(View view) {
         Intent intent = new Intent(this, RemoveGrade.class);
+        intent.putExtra("list", (Serializable)select.getGrades());
         startActivityForResult(intent, RMV_GRADE_REQUEST);
     }
 

@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new SemesterAdapter(this, semesterList);
         lv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+        writeToFile(semesterList);
     }
 
     public void addSemester(View view) {

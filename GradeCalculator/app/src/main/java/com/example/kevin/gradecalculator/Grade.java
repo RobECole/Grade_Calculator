@@ -60,6 +60,6 @@ public class Grade implements Serializable {
     }
     //toString override
     public String toString(){
-        return name + ":" + type + ":" + mark;
+        return name;
     }
 }
