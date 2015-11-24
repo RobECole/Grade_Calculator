@@ -32,18 +32,47 @@ public class ShowGrades extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_show_grades);
 
         select = (Course)getIntent().getSerializableExtra("course");
-        try{
 
+        try{
+           // Toast.makeText(getApplicationContext(),select.getGrades().toString(), Toast.LENGTH_SHORT).show();
             lv = (ListView)findViewById(R.id.listView);
             adapter = new GradeAdapter(this, select.getGrades());
             lv.setAdapter(adapter);
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    currGradeId = Integer.parseInt("" + id);
+                    Grade val = select.getGrades().get(Integer.parseInt("" + id));
+                    //Toast.makeText(getApplicationContext(), "TEST!", Toast.LENGTH_SHORT).show();
+                    boolean validDistribution = false;
+                    List<String> distributions = select.getDistributionNames();
+                    if (distributions.contains(val.getType()) == true) {
+                        validDistribution = true;
+                        final String type = val.getType();
+                        List<String> modifiedDis = new ArrayList<String>() {{
+                            add(type);
+                        }};
+                        distributions.remove(val.getType());
+                        modifiedDis.addAll(distributions);
+                        distributions = modifiedDis;
+                    }
+                    Intent intent = new Intent(ShowGrades.this, EditGrade.class);
+                    intent.putExtra("grade", val.getName());
+                    intent.putExtra("mark", val.getMark());
+                    intent.putExtra("validType", validDistribution);
+                    intent.putExtra("list", (Serializable) distributions);
+                    startActivityForResult(intent, EDIT_GRADES_REQUEST);
+
+                }
+            });
 
 
         }catch (NullPointerException ignored){
         }
-        setContentView(R.layout.activity_show_grades);
+
         updateMark();
     }
     @Override
@@ -64,6 +93,16 @@ public class ShowGrades extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_return) {
+            Intent results = new Intent();
+            results.putExtra("course", select);
+            setResult(RESULT_OK,results);
+            finish();
+            return true;
+        }
 
 
         return super.onOptionsItemSelected(item);
@@ -126,33 +165,6 @@ public class ShowGrades extends AppCompatActivity {
             lv = (ListView)findViewById(R.id.listView);
             adapter = new GradeAdapter(this,select.getGrades());
             lv.setAdapter(adapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    currGradeId = Integer.parseInt("" + id);
-                    Grade val = select.getGrades().get(Integer.parseInt("" + id));
-                    //Toast.makeText(getApplicationContext(), "TEST!", Toast.LENGTH_SHORT).show();
-                    boolean validDistribution = false;
-                    List<String> distributions = select.getDistributionNames();
-                    if(distributions.contains(val.getType()) == true){
-                        validDistribution = true;
-                        final String type = val.getType();
-                        List<String> modifiedDis = new ArrayList<String>() {{
-                            add(type);
-                        }};
-                        distributions.remove(val.getType());
-                        modifiedDis.addAll(distributions);
-                        distributions = modifiedDis;
-                    }
-                    Intent intent = new Intent(ShowGrades.this, EditGrade.class);
-                    intent.putExtra("grade", val.getName());
-                    intent.putExtra("mark", val.getMark());
-                    intent.putExtra("validType", validDistribution);
-                    intent.putExtra("list", (Serializable) distributions);
-                    startActivityForResult(intent, EDIT_GRADES_REQUEST);
-
-                }
-            });
         }else{
             if(requestCode == ADD_GRADE_REQUEST){
                 response = "Add Grade";
@@ -232,5 +244,6 @@ public class ShowGrades extends AppCompatActivity {
         TextView courseMark = (TextView) findViewById(R.id.lbl_CourseMark);
         courseName.setText(select.getName());
         courseMark.setText("" + mark);
+        select.setMark(mark);
     }
 }

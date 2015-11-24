@@ -96,6 +96,17 @@ public class ShowCourses extends AppCompatActivity {
                 }
                 response = "Remove Course";
                 Toast.makeText(getApplicationContext(), "Successful: " + response, Toast.LENGTH_SHORT).show();
+            }else if(requestCode == SHOW_GRADES_REQUEST){
+                Course s = (Course)resultIntent.getSerializableExtra("course");
+                for( Course c: select.getCourses()){
+                    if (c.getName().equals(s.getName()) && c.getId()==s.getId()) {
+                        select.getCourses().remove(c);
+                        break;
+                    }
+                }
+                select.getCourses().add(s);
+                adapter.notifyDataSetChanged();
+
             }
             lv = (ListView)findViewById(R.id.listView);
             adapter = new CourseAdapter(this,select.getCourses());
