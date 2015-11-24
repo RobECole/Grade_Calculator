@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 public class ShowGrades extends AppCompatActivity {
@@ -36,6 +37,7 @@ public class ShowGrades extends AppCompatActivity {
         }catch (NullPointerException ignored){
         }
         setContentView(R.layout.activity_show_grades);
+        updateMark();
     }
 
     @Override
@@ -110,13 +112,14 @@ public class ShowGrades extends AppCompatActivity {
             }
             Toast.makeText(getApplicationContext(), "Failed to: " + response, Toast.LENGTH_SHORT).show();
         }
+        updateMark();
     }
 
     @Override
     public void onBackPressed() {
         Intent results = new Intent();
         results.putExtra("course", select);
-        setResult(RESULT_OK,results);
+        setResult(RESULT_OK, results);
         finish();
     }
 
@@ -140,5 +143,29 @@ public class ShowGrades extends AppCompatActivity {
         Intent intent = new Intent(this, RemoveDistribution.class);
         intent.putExtra("list", (Serializable)select.getDistributionNames());
         startActivityForResult(intent, RMV_DISTRIBUTION_REQUEST);
+    }
+
+    public void updateMark(){
+        Map<String, Float> distributions = select.getCategoryDistribution();
+        List<Grade> grades = select.getGrades();
+        Float mark = 0f;
+        //Get each distribution
+        for (Map.Entry<String, Float> entry : distributions.entrySet())
+        {
+            String category = entry.getKey();
+            Float distribution = entry.getValue();
+            Float sumEachCategory = 0f;
+            int numMarks = 0;
+            //sum all grades for a distribution
+            for(Grade grade : grades){
+                if(grade.getType().equals(distribution)){
+                    sumEachCategory += grade.getMark();
+                    numMarks ++;
+                }
+            }
+            Float total = sumEachCategory/numMarks;
+            Float distributedTotal = total*distribution;
+            mark += distributedTotal;
+        }
     }
 }
