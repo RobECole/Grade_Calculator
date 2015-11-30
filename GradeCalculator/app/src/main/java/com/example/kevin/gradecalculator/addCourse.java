@@ -10,6 +10,9 @@ import android.widget.EditText;
 
 public class AddCourse extends AppCompatActivity {
 
+    /*
+    Class that renders add course activity. Returns course name and results ok.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public class AddCourse extends AppCompatActivity {
     }
 
     public void addDb(View view) {
-        //TODO: add course name into db, return course view
+        //parse input and pack intent. return to main
         EditText name = (EditText)findViewById(R.id.courseName);
 
         Intent results = new Intent();

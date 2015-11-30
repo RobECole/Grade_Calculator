@@ -15,6 +15,10 @@ public class RemoveGrade extends AppCompatActivity {
     public ArrayAdapter<Course> adapter;
     Spinner sp;
 
+    /*
+    Class that renders remove grade activity. Returns grade to be removed and results ok
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +53,14 @@ public class RemoveGrade extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //cancels activity, return result canceled
         Intent results = new Intent();
         setResult(RESULT_CANCELED,results);
         finish();
     }
 
     public void deleteGrade(View view) {
+        //parses user input from spinner, packs intent, returns result ok
         Grade line = (Grade)sp.getSelectedItem();
         Intent results = new Intent();
         results.putExtra("grade", line);

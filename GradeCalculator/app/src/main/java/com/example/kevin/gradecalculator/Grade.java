@@ -19,6 +19,7 @@ public class Grade implements Serializable {
     private String type;
     private float mark;
     private long courseId;
+
     //Constructor
     public Grade(String name, String type, float mark, long courseId){
         this.name = name;
@@ -26,6 +27,7 @@ public class Grade implements Serializable {
         this.mark = mark;
         this.courseId = courseId;
     }
+
     //Getters
     public String getName(){
         return name;
@@ -42,6 +44,7 @@ public class Grade implements Serializable {
     public long getCourseId(){
         return courseId;
     }
+
     //Setters
     public void setName(String name){
         this.name = name;
@@ -52,12 +55,8 @@ public class Grade implements Serializable {
     public void setMark(float mark){
         this.mark = mark;
     }
-    public void setId(long id){
-        this.id = id;
-    }
-    public void setCourseId(long courseId){
-        this.courseId = courseId;
-    }
+    public void setId(long id){ this.id = id; }
+
     //toString override
     public String toString(){
         return name;

@@ -14,6 +14,10 @@ import java.util.ArrayList;
 
 public class RemoveCourse extends AppCompatActivity {
 
+    /*
+    Class that renders remove course activity. Returns course to be removed and results ok
+    */
+
     public ArrayAdapter<Course> adapter;
     Spinner sp;
 
@@ -23,7 +27,7 @@ public class RemoveCourse extends AppCompatActivity {
         setContentView(R.layout.activity_remove_course);
 
         sp = (Spinner)findViewById(R.id.spinner);
-        adapter = new ArrayAdapter<Course>(this,android.R.layout.simple_spinner_item, (ArrayList<Course>)getIntent().getSerializableExtra("list"));
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, (ArrayList<Course>) getIntent().getSerializableExtra("list"));
         sp.setAdapter(adapter);
     }
 
@@ -45,13 +49,14 @@ public class RemoveCourse extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //cancels activity, return result canceled
         Intent results = new Intent();
         setResult(RESULT_CANCELED,results);
         finish();
     }
 
     public void deleteCourse(View view) {
-        //TODO: Remove course in spinner from db
+        //parses user input from spinner, packs intent, returns result ok
         Course line = (Course)sp.getSelectedItem();
         Intent results = new Intent();
         results.putExtra("course", line);

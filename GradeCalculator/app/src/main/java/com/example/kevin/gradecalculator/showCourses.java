@@ -22,6 +22,11 @@ public class ShowCourses extends AppCompatActivity {
     ListView lv;
     Semester select;
 
+    /*
+   Main activity on the course level. calls add remove courses. displays course names in a list and
+   current mark in the course.
+   */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

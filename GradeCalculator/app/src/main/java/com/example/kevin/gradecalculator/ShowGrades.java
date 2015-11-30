@@ -30,7 +30,12 @@ public class ShowGrades extends AppCompatActivity {
     private ListView lv;
     private Course select;
     private int currGradeId = 0;
-    
+
+    /*
+    Main activity on the grade level. calls add remove grade and distribution. displays grade and
+    current mark in the course at the top.
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

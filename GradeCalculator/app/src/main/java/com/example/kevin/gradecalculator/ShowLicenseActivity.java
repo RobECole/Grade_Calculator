@@ -13,6 +13,11 @@ import android.view.View;
 import android.widget.TextView;
 
 public class ShowLicenseActivity extends AppCompatActivity implements LicenseListener{
+
+    /*
+    Async activity that accesses a web resource. Displays GNU license from url. implements fab button
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

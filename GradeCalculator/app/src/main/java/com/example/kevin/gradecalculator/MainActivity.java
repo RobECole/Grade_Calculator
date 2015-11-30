@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
+
     public static DBHelper dbHelper;
     public static int  GET_LICENSE_REQUEST = 2;
     public static int  ADD_SEMESTER_REQUEST = 23;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     public static SemesterAdapter adapter;
     private ListView lv;
     MediaPlayer mediaPlayer = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

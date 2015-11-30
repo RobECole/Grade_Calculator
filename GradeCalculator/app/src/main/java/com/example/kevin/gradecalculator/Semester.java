@@ -17,12 +17,14 @@ public class Semester implements Serializable{
     private int year;
     private String term;
     private List<Course> courses;
+
     //Constructor
     public Semester(String term, int year){
         this.term = term;
         this.year = year;
         this.courses = new ArrayList<>();
     }
+
     //Getters
     public String getTerm(){
         return term;
@@ -33,20 +35,12 @@ public class Semester implements Serializable{
     public List<Course> getCourses(){
         return courses;
     }
-    //Setters
-    public void setTerm(String term){
-        this.term = term;
-    }
-    public void setYear(int year){
-        this.year = year;
-    }
-    public void setCourses(List<Course> courses){
-        this.courses = (ArrayList)courses;
-    }
+
     //Adders
     public void addCourse(Course course){
         courses.add(course);
     }
+
     //Deleters
     public void removeCourse(Course course){
         int counter = 0;

@@ -15,6 +15,10 @@ public class RemoveDistribution extends AppCompatActivity {
     public ArrayAdapter<String> adapter;
     Spinner sp;
 
+    /*
+    Class that renders remove course distribution activity. Returns course distribution to be removed and results ok
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +48,14 @@ public class RemoveDistribution extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //cancels activity, return result canceled
         Intent results = new Intent();
         setResult(RESULT_CANCELED,results);
         finish();
     }
 
     public void deleteDistribution(View view) {
+        //parses user input from spinner, packs intent, returns result ok
         String line = (String)sp.getSelectedItem();
         Intent results = new Intent();
         results.putExtra("distribution", line);

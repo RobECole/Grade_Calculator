@@ -14,12 +14,17 @@ import java.util.List;
 
 public class AddDistribution extends AppCompatActivity {
 
+    /*
+    Class that renders add distribution activity. Returns distribution and results ok
+    */
+
     List<String> distributionList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_distribution);
-        distributionList = (List<String>)getIntent().getSerializableExtra("list");
+        distributionList = (List<String>) getIntent().getSerializableExtra("list");
     }
 
     @Override
@@ -40,28 +45,30 @@ public class AddDistribution extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //cancels activity, return result canceled
         Intent results = new Intent();
-        setResult(RESULT_CANCELED,results);
+        setResult(RESULT_CANCELED, results);
         finish();
     }
 
     public void addDistribution(View view) {
-        Spinner type = (Spinner)findViewById(R.id.distributionType);
-        String disType = (String)type.getSelectedItem();
-        EditText weight = (EditText)findViewById(R.id.weight);
+        //parse input fields, packs intent, return result ok
+        Spinner type = (Spinner) findViewById(R.id.distributionType);
+        String disType = (String) type.getSelectedItem();
+        EditText weight = (EditText) findViewById(R.id.weight);
 
         String temp = "";
         int currMax = 0;
         int value = 0;
-        for(String distribution : distributionList){
-            if(distribution.contains(disType)){
-                temp = distribution.replace(disType,"") + "";
-                if(temp.equals("")){
+        for (String distribution : distributionList) {
+            if (distribution.contains(disType)) {
+                temp = distribution.replace(disType, "") + "";
+                if (temp.equals("")) {
                     value = 0;
-                }else{
-                    value= Integer.parseInt(temp);
+                } else {
+                    value = Integer.parseInt(temp);
                 }
-                if(value > currMax){
+                if (value > currMax) {
                     currMax = value;
                 }
             }
@@ -71,7 +78,7 @@ public class AddDistribution extends AppCompatActivity {
         results.putExtra("type", disType + (currMax + 1));
         results.putExtra("weight", weight.getText().toString());
 
-        setResult(RESULT_OK,results);
+        setResult(RESULT_OK, results);
         finish();
     }
 }

@@ -16,12 +16,15 @@ public class AddGrade extends AppCompatActivity {
     public ArrayAdapter<String> adapter;
     Spinner sp;
 
+    /*
+   Class that renders add grade activity. Returns grade and results ok
+   */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_grade);
 
-        //TODO change the array list
         sp = (Spinner)findViewById(R.id.spinner2);
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, (ArrayList<String>)getIntent().getSerializableExtra("list"));
         sp.setAdapter(adapter);
@@ -46,12 +49,14 @@ public class AddGrade extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //cancels activity, return result canceled
         Intent results = new Intent();
         setResult(RESULT_CANCELED,results);
         finish();
     }
 
     public void addGrade(View view) {
+        //parses input, packs the intent, returns result ok
         EditText name = (EditText)findViewById(R.id.gradeName);
         String line = (String)sp.getSelectedItem();
         EditText mark = (EditText)findViewById(R.id.Mark);

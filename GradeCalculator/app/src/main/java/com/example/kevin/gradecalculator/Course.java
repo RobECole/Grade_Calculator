@@ -22,6 +22,7 @@ public class Course implements Serializable{
     private Map<String,Float> categoryDistribution;
     private float mark;
     private long id;
+
     //constructors
     public Course() {
         this.grades = new ArrayList<>();
@@ -53,6 +54,7 @@ public class Course implements Serializable{
         this.name = name;
         this.mark = 0;
     }
+
     //Getters
     public List<Grade> getGrades(){
         return grades;
@@ -74,6 +76,7 @@ public class Course implements Serializable{
     public long getId(){
         return id;
     }
+
     //Setters
     public void setGrades(List<Grade> grades){
         this.grades = grades;
@@ -90,19 +93,19 @@ public class Course implements Serializable{
     public void setId(long id){
         this.id = id;
     }
+
     //Adders
     public void addGrade(Grade grade){
         this.grades.add(grade);
     }
-    public void addCategoryDistribution(String category, float distribution){
-        this.categoryDistribution.put(category,distribution);
-    }
+
     public void addCategoryDistribution(Map<String, Float> categoryDistribution){
         for (Map.Entry<String, Float> entry : categoryDistribution.entrySet())
         {
             this.categoryDistribution.put(entry.getKey(), entry.getValue());
         }
     }
+
     //Deleters
     public void deleteGrade(Grade grade){
         int counter = 0;
@@ -120,26 +123,6 @@ public class Course implements Serializable{
         if(this.categoryDistribution.containsKey(category)){
             this.categoryDistribution.remove(category);
         }
-    }
-    //Updaters
-    public void updateCategoryName(String category){
-        if(this.categoryDistribution.containsKey(category)){
-            float distribution = this.categoryDistribution.get(category);
-            this.categoryDistribution.remove(category);
-            addCategoryDistribution(category, distribution);
-        }
-    }
-    public void updateDistribution(String category, Float distribution){
-        deleteCategory(category);
-        addCategoryDistribution(category, distribution);
-    }
-    //TODO updateMark
-    public void updateMark(){
-        float mark = 0;
-        //match type == category name
-        //multiply totals in each category with distribution percentage
-        //add all results to a total
-        setMark(mark);
     }
 
     @Override

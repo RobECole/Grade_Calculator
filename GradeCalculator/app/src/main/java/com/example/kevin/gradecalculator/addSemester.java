@@ -10,6 +10,10 @@ import android.widget.EditText;
 
 public class AddSemester extends AppCompatActivity {
 
+    /*
+    Class that renders add grade activity. Returns grade and results ok
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +38,14 @@ public class AddSemester extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        //cancels activity, return result canceled
         Intent results = new Intent();
         setResult(RESULT_CANCELED,results);
         finish();
     }
 
     public void addDb(View view) {
+        //parses user input, packs intent, returns result ok
         EditText year = (EditText)findViewById(R.id.yearIn);
         EditText term = (EditText)findViewById(R.id.termIn);
         int yearText = Integer.parseInt(year.getText().toString());
